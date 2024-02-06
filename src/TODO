@@ -1,0 +1,24 @@
+TODO
+
+*solve local debugging problem for idea-postgresql. use remote debugging?
+*revisit controller and service layout depending on the requirements from frontend
+    *search vs vs
+
+*spring security implementation, use google auth, need to be able to run it on local
+    first
+
+*dto conversion
+
+*görüntüleme sayısı, içeride bir cache'te tutup belirli aralıklarla yazılabilir.
+    request sayısını optimize ederek çözüm bul
+*requestBody-entity aynı olmaması gereken durumları düşün
+    Category
+
+*response kodları kontrol et
+*update method test
+*Author/Admin/User ilişksini gözden geçir
+*password encryption
+*profile pictures
+
+
+*postgres, container, persistent storage for dev env
