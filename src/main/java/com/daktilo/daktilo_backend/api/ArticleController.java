@@ -129,7 +129,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping(path="/search/")
+    @GetMapping(path="/search")
     @Transactional
     public ResponseEntity searchArticles(@RequestParam("keyword") String keyword){
         try{

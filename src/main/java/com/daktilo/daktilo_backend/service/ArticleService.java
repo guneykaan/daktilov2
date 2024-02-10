@@ -23,13 +23,13 @@ public class ArticleService {
     DTOMapper dtoMapper;
 
     public Article add(ArticleDTO articleDTO){
-        Article article = dtoMapper.convertToArticleEntity(articleDTO);
+        Article article = dtoMapper.convertToArticleEntity(articleDTO,null,"add");
 
         return articleRepository.save(article);
     }
 
     public Article update(UUID id, ArticleDTO articleDTO){
-        Article article = dtoMapper.convertToArticleEntity(articleDTO);
+        Article article = dtoMapper.convertToArticleEntity(articleDTO,id,"update");
 
         article.setArticleId(id);
 
