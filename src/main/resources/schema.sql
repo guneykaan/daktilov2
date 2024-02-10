@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS ARTICLE (
     active BOOLEAN,
     view_count BIGINT DEFAULT 0,
     author_id UUID,
+    in_slider BOOLEAN,
     FOREIGN KEY (author_id) REFERENCES AUTHOR(id)
 );
 CREATE TABLE IF NOT EXISTS CATEGORY (

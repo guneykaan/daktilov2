@@ -82,6 +82,7 @@ public class DTOMapper {
         article.setArticleTitle(articleDTO.getArticleTitle());
         article.setCommentStatus(articleDTO.isCommentStatus());
         article.setActive(articleDTO.isActive());
+        article.setInSlider(articleDTO.isInSlider());
 
         return article;
     }

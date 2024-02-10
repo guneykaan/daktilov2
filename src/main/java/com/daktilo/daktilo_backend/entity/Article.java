@@ -69,6 +69,9 @@ public class Article {
     @Column(name="view_count")
     private Long viewCount = 0L;
 
+    @Column(name="in_slider")
+    private boolean inSlider;
+
     public UUID getArticleId() {
         return articleId;
     }
@@ -147,6 +150,14 @@ public class Article {
 
     public void setViewCount(Long viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public boolean isInSlider() {
+        return inSlider;
+    }
+
+    public void setInSlider(boolean inSlider) {
+        this.inSlider = inSlider;
     }
 
     @Override

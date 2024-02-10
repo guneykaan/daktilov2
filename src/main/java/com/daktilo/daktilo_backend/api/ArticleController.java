@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -79,6 +80,38 @@ public class ArticleController {
         }catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().body(category + " kategorisindeki haberleri gösterirken beklenmedik bir problem oluştu");
+        }
+    }
+
+    @GetMapping(path="/slider")
+    @Transactional
+    public ResponseEntity getArticlesInSlider(
+            @PathVariable(value = "category", required = false) String categoryName,
+            @RequestParam(name="page", defaultValue="0") int page,
+            @RequestParam(name="size", defaultValue="3") int size
+    ){
+        try{
+            Pageable pageRequest = PageRequest.of(page,size);
+            Page<Article> articlesInSlider = null;
+
+            if(categoryName!=null && !categoryName.isEmpty()) {
+                articlesInSlider = articleRepository.
+                        findByInSliderTrueAndCategories_CategoryNameOrderByDatePostedDesc(categoryName, pageRequest);
+            }else{
+                articlesInSlider = articleRepository.findByInSliderTrueOrderByDatePostedDesc(pageRequest);
+            }
+
+            if (articlesInSlider!=null && !articlesInSlider.isEmpty()){
+                return ResponseEntity.ok(articlesInSlider);
+            }else{
+                return ResponseEntity.badRequest().body("Aradığınız kategoride haber bulunamadı.");
+            }
+        }catch(PersistenceException p){
+            p.printStackTrace();
+            return ResponseEntity.badRequest().body("Haberleri gösterirken bir problem oluştu");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Haberleri gösterirken beklenmedik bir problem oluştu");
         }
     }
 

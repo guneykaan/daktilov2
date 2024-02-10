@@ -23,6 +23,8 @@ public class ArticleDTO {
 
     private boolean active;
 
+    private boolean inSlider;
+
     public Set<CategoryDTO> getCategories() {
         return categories;
     }
@@ -85,5 +87,13 @@ public class ArticleDTO {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isInSlider() {
+        return inSlider;
+    }
+
+    public void setInSlider(boolean inSlider) {
+        this.inSlider = inSlider;
     }
 }

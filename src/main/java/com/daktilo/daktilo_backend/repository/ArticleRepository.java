@@ -23,4 +23,11 @@ public interface ArticleRepository extends JpaRepository<Article, UUID> {
     @Query("SELECT a FROM Article a INNER JOIN a.tags t WHERE t.tagName IN :tagNames ORDER BY a.datePosted DESC")
     Page<Article> findByTags_TagNameOrderByDatePostedDesc(List<String> tagNames, Pageable pageable);
 
+    @Query("SELECT a FROM Article a WHERE a.inSlider = true ORDER BY a.datePosted DESC")
+    Page<Article> findByInSliderTrueOrderByDatePostedDesc(Pageable pageable);
+
+    @Query("SELECT a FROM Article a INNER JOIN a.categories c WHERE a.inSlider = true " +
+            "AND c.categoryName = :categoryName ORDER BY a.datePosted DESC")
+    Page<Article> findByInSliderTrueAndCategories_CategoryNameOrderByDatePostedDesc(@Param("categoryName") String categoryName, Pageable pageable);
+
 }
