@@ -83,6 +83,35 @@ public class ArticleController {
         }
     }
 
+    //todo timestamp-date'e aralığına göre ver
+    @GetMapping(path="/popular")
+    @Transactional
+    public ResponseEntity getAllOrderedByPopular(
+            @PathVariable(value="from",required = false) Timestamp from,
+            @PathVariable(value="to",required = false) Timestamp to,
+            @RequestParam(name="page", defaultValue="0") int page,
+            @RequestParam(name="size", defaultValue="3") int size
+    ){
+        try{
+            Pageable pageRequest = PageRequest.of(page,size);
+            Page<Article> articles = null;
+
+            articles = articleRepository.findAllByOrderByViewCountDesc(pageRequest);
+
+            if (articles!=null && !articles.isEmpty()){
+                return ResponseEntity.ok(articles);
+            }else{
+                return ResponseEntity.badRequest().body("Haber bulunamadı.");
+            }
+        }catch(PersistenceException p){
+            p.printStackTrace();
+            return ResponseEntity.badRequest().body("Haberleri gösterirken bir problem oluştu");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Haberleri gösterirken beklenmedik bir problem oluştu");
+        }
+    }
+
     @GetMapping(path="/slider")
     @Transactional
     public ResponseEntity getArticlesInSlider(

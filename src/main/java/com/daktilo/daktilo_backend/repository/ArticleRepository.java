@@ -33,4 +33,6 @@ public interface ArticleRepository extends JpaRepository<Article, UUID> {
             "ORDER BY a.datePosted DESC")
     Page<Article> findByInSliderTrueAndCategories_CategoryNameOrderByDatePostedDesc(@Param("categoryName") String categoryName, Pageable pageable);
 
+    Page<Article> findAllByOrderByViewCountDesc(Pageable pageRequest);
+
 }
