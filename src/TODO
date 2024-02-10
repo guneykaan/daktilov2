@@ -4,21 +4,18 @@ TODO
 *revisit controller and service layout depending on the requirements from frontend
     *search vs vs
 
-*spring security implementation, use google auth, need to be able to run it on local
-    first
+*spring security implementation,
+    admin login ve author login sadece
+use google auth??
 
-*dto conversion
 
-*görüntüleme sayısı, içeride bir cache'te tutup belirli aralıklarla yazılabilir.
-    request sayısını optimize ederek çözüm bul
 *requestBody-entity aynı olmaması gereken durumları düşün
-    Category
 
-*response kodları kontrol et
 *update method test
-*Author/Admin/User ilişksini gözden geçir
 *password encryption
-*profile pictures
+*video ve fotoğraf tutma
 
 
-*postgres, container, persistent storage for dev env
+*eager fetch-lazy fetch bazı yerlerde istediğim gibi çalışmıyor
+    -> jsonignore yerine başka bi çözüm bul
+    -> native sql

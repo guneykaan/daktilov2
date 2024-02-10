@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS ARTICLE (
     article_content TEXT,
     comment_status BOOLEAN,
     active BOOLEAN,
-    view_count BIGINT,
+    view_count BIGINT DEFAULT 0,
     author_id UUID,
     FOREIGN KEY (author_id) REFERENCES AUTHOR(id)
 );
@@ -49,14 +49,13 @@ CREATE TABLE IF NOT EXISTS CATEGORY (
      FOREIGN KEY (article_id) REFERENCES ARTICLE(article_id)
  );
 CREATE TABLE IF NOT EXISTS TAG (
-    tag_id UUID PRIMARY KEY,
-    tag_name VARCHAR(255) UNIQUE
+    tag_name VARCHAR(50) PRIMARY KEY
 );
 CREATE TABLE IF NOT EXISTS tag_article_map_table (
-    tag_id UUID,
+    tag_name VARCHAR(50),
     article_id UUID,
-    PRIMARY KEY (tag_id, article_id),
-    FOREIGN KEY (tag_id) REFERENCES tag (tag_id),
+    PRIMARY KEY (tag_name, article_id),
+    FOREIGN KEY (tag_name) REFERENCES tag (tag_name),
     FOREIGN KEY (article_id) REFERENCES article (article_id)
 );
 CREATE TABLE IF NOT EXISTS category_article_map_table (

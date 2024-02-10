@@ -26,19 +26,19 @@ public class CategoryController {
     CategoryService categoryService;
 
     @GetMapping
-    public Page<Category> getAll(
-            @RequestParam(name="page", defaultValue="0") int page,
-            @RequestParam(name="size", defaultValue="3") int size
-    ){
-        Pageable pageRequest = PageRequest.of(page,size);
-        List<Category> articles = categoryRepository.findAll();
+    public List<Category> getAll(){
+        List<Category> categories = categoryRepository.findAll();
 
-        return PageImplCustom.createPage(articles, pageRequest);
+        if(categories!=null || !categories.isEmpty()){
+            return categories;
+        }else{
+            return null;
+        }
     }
 
     @GetMapping(path="/{name}")
     public Category findByName(@PathVariable String name){
-        return categoryRepository.findByCategoryName(name).get();
+        return categoryRepository.findByCategoryName(name).orElse(null);
     }
 
     @PostMapping(path="/add")

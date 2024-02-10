@@ -1,8 +1,9 @@
 package com.daktilo.daktilo_backend.repository;
 
 import com.daktilo.daktilo_backend.entity.Article;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,12 +14,13 @@ import java.util.UUID;
 public interface ArticleRepository extends JpaRepository<Article, UUID> {
 
     @Query("SELECT a FROM Article a JOIN a.categories c WHERE c.categoryName = :categoryName ORDER BY a.datePosted DESC")
-    List<Article> findByCategories_CategoryNameOrderByDatePostedDesc(@Param("categoryName") String categoryName);
+    Page<Article> findByCategories_CategoryNameOrderByDatePostedDesc(@Param("categoryName") String categoryName, Pageable pageable);
 
-    public List<Article> findAllByOrderByDatePostedDesc();
+    Page<Article> findAllByOrderByDatePostedDesc(Pageable pageable);
 
-    public List<Article> findByAuthor_IdOrderByDatePostedDesc(UUID id);
+    Page<Article> findByAuthor_IdOrderByDatePostedDesc(UUID id, Pageable pageable);
 
-    public List<Article> findByTags_TagNameOrderByDatePostedDesc(String tag);
+    @Query("SELECT a FROM Article a INNER JOIN a.tags t WHERE t.tagName IN :tagNames ORDER BY a.datePosted DESC")
+    Page<Article> findByTags_TagNameOrderByDatePostedDesc(List<String> tagNames, Pageable pageable);
 
 }

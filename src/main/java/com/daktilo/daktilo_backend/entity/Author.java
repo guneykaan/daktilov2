@@ -8,7 +8,7 @@ import java.util.UUID;
 import java.util.List;
 
 @Entity
-@Table(name="AUTHOR", uniqueConstraints = {
+@Table(name="author", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"author_name"}),
         @UniqueConstraint(columnNames = {"email"})
 })
@@ -88,11 +88,13 @@ public class Author {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return authorAccountStatus == author.authorAccountStatus && Objects.equals(id, author.id) && authorName.equals(author.authorName) && authorEmail.equals(author.authorEmail) && username.equals(author.username) && password.equals(author.password) && articles.equals(author.articles);
+        return authorAccountStatus == author.authorAccountStatus && Objects.equals(id, author.id) &&
+                authorName.equals(author.authorName) && authorEmail.equals(author.authorEmail) &&
+                username.equals(author.username) && password.equals(author.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(authorName, authorEmail, authorAccountStatus, username, password, articles);
+        return Objects.hash(authorName, authorEmail, authorAccountStatus, username, password);
     }
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name="ADMIN", uniqueConstraints = {
+@Table(name="admin", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_name"})
 })
 public class Admin {
@@ -61,7 +61,8 @@ public class Admin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Admin admin = (Admin) o;
-        return Objects.equals(id, admin.id) && username.equals(admin.username) && password.equals(admin.password) && role.equals(admin.role);
+        return Objects.equals(id, admin.id) && username.equals(admin.username) &&
+                password.equals(admin.password) && role.equals(admin.role);
     }
 
     @Override

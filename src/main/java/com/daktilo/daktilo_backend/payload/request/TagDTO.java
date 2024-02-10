@@ -15,4 +15,12 @@ public class TagDTO {
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }
+
+    public UUID getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(UUID articleId) {
+        this.articleId = articleId;
+    }
 }

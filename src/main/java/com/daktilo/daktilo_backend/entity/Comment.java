@@ -1,5 +1,6 @@
 package com.daktilo.daktilo_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -7,7 +8,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name="'COMMENT'")
+@Table(name="comment")
 public class Comment {
 
     @Id
@@ -24,8 +25,7 @@ public class Comment {
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 
-    //TODO revisit according to frontend
-    //and page traversal needs
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="article_id")
     private Article article;
@@ -89,11 +89,13 @@ public class Comment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return commentStatus == comment.commentStatus && Objects.equals(id, comment.id) && commentText.equals(comment.commentText) && user.equals(comment.user) && article.equals(comment.article) && commentDate.equals(comment.commentDate);
+        return commentStatus == comment.commentStatus && Objects.equals(id, comment.id) &&
+                commentText.equals(comment.commentText) &&
+                user.equals(comment.user) && commentDate.equals(comment.commentDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, commentText, user, article, commentStatus, commentDate);
+        return Objects.hash(id, commentText, user, commentStatus, commentDate);
     }
 }

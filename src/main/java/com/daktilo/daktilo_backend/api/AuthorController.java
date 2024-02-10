@@ -6,14 +6,13 @@ import com.daktilo.daktilo_backend.payload.request.AuthorDTO;
 import com.daktilo.daktilo_backend.repository.ArticleRepository;
 import com.daktilo.daktilo_backend.repository.AuthorRepository;
 import com.daktilo.daktilo_backend.service.AuthorService;
-import com.daktilo.daktilo_backend.util.PageImplCustom;
+import jakarta.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,55 +30,138 @@ public class AuthorController {
     ArticleRepository articleRepository;
 
     @GetMapping
-    public Page<Author> getAll(
+    public ResponseEntity getAll(
             @RequestParam(name="page", defaultValue="0") int page,
             @RequestParam(name="size", defaultValue="3") int size){
-        Pageable pageRequest = PageRequest.of(page,size);
-        List<Author> authors = authorRepository.findAll();
+        try {
+            Pageable pageRequest = PageRequest.of(page, size);
+            Page<Author> authors = authorRepository.findAll(pageRequest);
 
-        return PageImplCustom.createPage(authors, pageRequest);
+            if (authors!=null && !authors.isEmpty()){
+                return ResponseEntity.ok(authors);
+            }else{
+                return ResponseEntity.badRequest().body("Yazar bulunamadı");
+            }
+        }catch(PersistenceException p){
+            p.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarları çekerken bir hata oluştu");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarları çekerken beklenmedik bir hata oluştu");
+        }
     }
 
     @GetMapping("/{id}")
-    public Author getOneById(@PathVariable UUID id){
-        return authorRepository.findById(id).get();
+    public ResponseEntity getOneById(@PathVariable UUID id){
+        try{
+            Author author = authorRepository.findById(id).orElse(null);
+            if(author!=null){
+                return ResponseEntity.ok(author);
+            }else{
+                return ResponseEntity.badRequest().body("Yazar bulunamadı.");
+            }
+        }catch(PersistenceException p){
+            p.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarı bulmaya çalışırken bir hata oluştu");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarı bulmaya çalışırken beklenmedik bir hata oluştu");
+        }
     }
 
     @GetMapping("/{id}/articles")
-    public Page<Article> getAuthorArticles(
+    public ResponseEntity getAuthorArticles(
             @RequestParam(name="page", defaultValue="0") int page,
             @RequestParam(name="size", defaultValue="3") int size,
             @PathVariable(name="id") UUID id){
-        Pageable pageRequest = PageRequest.of(page,size);
+        try {
+            Pageable pageRequest = PageRequest.of(page, size);
 
-        List<Article> articles =
-                articleRepository.findByAuthor_IdOrderByDatePostedDesc(id);
+            Page<Article> articles =
+                    articleRepository.findByAuthor_IdOrderByDatePostedDesc(id, pageRequest);
 
-        return PageImplCustom.createPage(articles, pageRequest);
+            if (articles!=null && !articles.isEmpty()){
+                return ResponseEntity.ok(articles);
+            }else{
+                return ResponseEntity.badRequest().body("Haber bulunamadı.");
+            }
+        }catch(PersistenceException p){
+            p.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarın yazılarını bulmaya çalışırken bir hata oluştu");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarın yazılarını bulmaya çalışırken beklenmedik bir hata oluştu");
+        }
     }
 
     @PostMapping("/{id}/deactivate/{status}")
-    public void changeAuthorAccountStatus(@PathVariable(name="id") UUID id,
+    public ResponseEntity changeAuthorAccountStatus(@PathVariable(name="id") UUID id,
                                           @PathVariable(name="status") boolean status){
-        Author author = authorRepository.findById(id).get();
-        author.setAuthorAccountStatus(status);
-        authorRepository.save(author);
+        try{
+            Author author = authorRepository.findById(id).orElse(null);
+            if(author!=null){
+                author.setAuthorAccountStatus(status);
+                Author saved = authorRepository.save(author);
+                return ResponseEntity.ok(saved);
+            }else{
+                return ResponseEntity.badRequest().body("Yazar bulunamadı.");
+            }
+        }catch(PersistenceException p){
+            p.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarın durumunu güncellerken bir hata oluştu");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarın durumunu güncellerken beklenmedik bir hata oluştu");
+        }
     }
 
     @PostMapping("/add")
-    public Author addAuthor(@RequestBody AuthorDTO authorDTO){
-        return authorService.add(authorDTO);
+    public ResponseEntity addAuthor(@RequestBody AuthorDTO authorDTO){
+        try{
+            Author author = authorService.add(authorDTO);
+            return ResponseEntity.ok(author);
+        }catch(PersistenceException p){
+            p.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazar eklemeye çalışırken bir hata oluştu");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazar eklemeye çalışırken beklenmedik bir hata oluştu");
+        }
     }
 
     @PutMapping("/edit/{id}")
-    public Author editAuthorAccount(
+    public ResponseEntity editAuthorAccount(
             @PathVariable(name="id") UUID id,
             @RequestBody AuthorDTO authorDTO){
-        return authorService.update(id,authorDTO);
+        try{
+            Author author = authorService.update(id,authorDTO);
+            return ResponseEntity.ok(author);
+        }catch(PersistenceException p){
+            p.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarı güncellemeye çalışırken bir hata oluştu");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Yazarı güncellemeye çalışırken beklenmedik bir hata oluştu");
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void removeAuthor(@PathVariable(name="id") UUID id){
-        authorRepository.deleteById(id);
+    public ResponseEntity removeAuthor(@PathVariable(name="id") UUID id){
+        try {
+            Author author = authorRepository.findById(id).orElse(null);
+
+            if (author != null) {
+                authorRepository.deleteById(id);
+                return ResponseEntity.ok().body("Silme işlemi başarılı");
+            } else {
+                return ResponseEntity.badRequest().body("Silmek istediğiniz yazar bulunamadı.");
+            }
+        }catch(PersistenceException p){
+            p.printStackTrace();
+            return ResponseEntity.badRequest().body("Silme işlemi sırasında bir hata oluştu");
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Silme işlemi sırasında beklenmedik bir hata oluştu.");
+        }
     }
 }

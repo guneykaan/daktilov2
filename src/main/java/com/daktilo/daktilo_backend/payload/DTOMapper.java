@@ -3,6 +3,8 @@ package com.daktilo.daktilo_backend.payload;
 import com.daktilo.daktilo_backend.entity.*;
 import com.daktilo.daktilo_backend.payload.request.*;
 import com.daktilo.daktilo_backend.repository.AuthorRepository;
+import com.daktilo.daktilo_backend.repository.CategoryRepository;
+import com.daktilo.daktilo_backend.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,18 @@ public class DTOMapper {
     @Autowired
     AuthorRepository authorRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
+    TagRepository tagRepository;
+
     public Author convertToAuthorEntity(AuthorDTO authorDTO){
         Author author = new Author();
 
         author.setUsername(authorDTO.getUsername());
         author.setAuthorName(authorDTO.getAuthorName());
+        author.setAuthorEmail(authorDTO.getAuthorEmail());
         author.setPassword(authorDTO.getPassword());
         author.setAuthorAccountStatus(authorDTO.isAuthorAccountStatus());
 
@@ -30,24 +39,28 @@ public class DTOMapper {
 
     //TODO böyle bi entity dönünce update sırasında .save() patlıyor mu?
     public Category convertToCategoryEntity(CategoryDTO categoryDTO){
-        Category category = new Category();
+        Category category = categoryRepository.findByCategoryName(categoryDTO.getCategoryName()).orElse(null);
 
-        category.setCategoryName(categoryDTO.getCategoryName());
-        category.setCategoryDesc(categoryDTO.getCategoryDesc());
-
+        if(category==null) {
+            category = new Category();
+            category.setCategoryName(categoryDTO.getCategoryName());
+            category.setCategoryDesc(categoryDTO.getCategoryDesc());
+        }
         return category;
     }
 
     public Article convertToArticleEntity(ArticleDTO articleDTO){
         Article article = new Article();
 
-        article.setCategories(articleDTO.getCategories());
+        article.setCategories(articleDTO.getCategories().stream().map(
+                this::convertToCategoryEntity).collect(Collectors.toSet())
+        );
         article.setTags(articleDTO.getTags().stream().map(
-                tagDTO-> convertToTagEntity(tagDTO)).collect(Collectors.toSet())
+                this::convertToTagEntity).collect(Collectors.toSet())
         );
         article.setAuthor(authorRepository.findById(articleDTO.getAuthorId()).get());
         article.setDatePosted(articleDTO.getDatePosted());
-        article.setArticleTitle(articleDTO.getArticleContent());
+        article.setArticleContent(articleDTO.getArticleContent());
         article.setArticleTitle(articleDTO.getArticleTitle());
         article.setCommentStatus(articleDTO.isCommentStatus());
         article.setActive(articleDTO.isActive());
@@ -65,9 +78,12 @@ public class DTOMapper {
     }
 
     public Tag convertToTagEntity(TagDTO tagDTO){
-        Tag tag = new Tag();
+        Tag tag = tagRepository.findByTagName(tagDTO.getTagName()).orElse(null);
 
-        tag.setTagName(tagDTO.getTagName());
+        if(tag==null){
+            tag = new Tag();
+            tag.setTagName(tagDTO.getTagName());
+        }
         return tag;
     }
 

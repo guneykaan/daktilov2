@@ -1,33 +1,27 @@
 package com.daktilo.daktilo_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name="TAG", uniqueConstraints = {
+@Table(name="tag", uniqueConstraints = {
         @UniqueConstraint(columnNames={"tag_name"})
 })
 public class Tag {
+    //Todo
     @Id
-    @Column(name="tag_id")
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private UUID id;
     @Column(name="tag_name")
     private String tagName;
 
+    @JsonIgnore
     @ManyToMany(fetch= FetchType.LAZY, mappedBy="tags")
+    @BatchSize(size=100)
     private List<Article> articles;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getTagName() {
         return tagName;
@@ -50,11 +44,11 @@ public class Tag {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tag tag = (Tag) o;
-        return Objects.equals(id, tag.id) && tagName.equals(tag.tagName) && articles.equals(tag.articles);
+        return tagName.equals(tag.tagName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tagName, articles);
+        return Objects.hash(tagName);
     }
 }

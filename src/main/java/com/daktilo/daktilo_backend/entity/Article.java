@@ -1,6 +1,7 @@
 package com.daktilo.daktilo_backend.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name="ARTICLE")
+@Table(name="article")
 public class Article {
     @Id
     @Column(name="article_id")
@@ -23,19 +24,18 @@ public class Article {
             inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private Set<Category> categories;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name="TAG_ARTICLE_MAP_TABLE",
     joinColumns = {@JoinColumn(name="article_id")},
-    inverseJoinColumns = {@JoinColumn(name="tag_id")})
+    inverseJoinColumns = {@JoinColumn(name="tag_name")})
+    @BatchSize(size=25)
     private Set<Tag> tags;
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="author_id")
     private Author author;
 
-    //TODO
-    //sadece haberin full sayfasını açmak istediği zaman hepsini çek.
-    //yeni bir query koşmadan join ile almaya çalış
+
     @OneToMany(fetch=FetchType.LAZY,
             mappedBy = "article",
             cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
@@ -67,7 +67,7 @@ public class Article {
     private boolean active;
 
     @Column(name="view_count")
-    private Long viewCount;
+    private Long viewCount = 0L;
 
     public UUID getArticleId() {
         return articleId;
@@ -154,11 +154,14 @@ public class Article {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return commentStatus == article.commentStatus && active == article.active && Objects.equals(articleId, article.articleId) && Objects.equals(categories, article.categories) && Objects.equals(tags, article.tags) && author.equals(article.author) && Objects.equals(comments, article.comments) && datePosted.equals(article.datePosted) && articleTitle.equals(article.articleTitle) && articleContent.equals(article.articleContent) && viewCount.equals(article.viewCount);
+        return commentStatus == article.commentStatus && active == article.active && Objects.equals(articleId, article.articleId)
+                && author.equals(article.author) && datePosted.equals(article.datePosted) &&
+                articleTitle.equals(article.articleTitle) && articleContent.equals(article.articleContent) &&
+                viewCount.equals(article.viewCount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(articleId, categories, tags, author, comments, datePosted, articleTitle, articleContent, commentStatus, active, viewCount);
+        return Objects.hash(articleId, author, datePosted, articleTitle, articleContent, commentStatus, active, viewCount);
     }
 }

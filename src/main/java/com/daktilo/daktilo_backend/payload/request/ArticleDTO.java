@@ -1,18 +1,13 @@
 package com.daktilo.daktilo_backend.payload.request;
 
-import com.daktilo.daktilo_backend.entity.Author;
 import com.daktilo.daktilo_backend.entity.Category;
-import com.daktilo.daktilo_backend.entity.Comment;
-import com.daktilo.daktilo_backend.entity.Tag;
-import jakarta.persistence.*;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public class ArticleDTO {
-    private Set<Category> categories;
+    private Set<CategoryDTO> categories;
 
     private Set<TagDTO> tags;
 
@@ -28,11 +23,11 @@ public class ArticleDTO {
 
     private boolean active;
 
-    public Set<Category> getCategories() {
+    public Set<CategoryDTO> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Set<CategoryDTO> categories) {
         this.categories = categories;
     }
 

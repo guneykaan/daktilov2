@@ -1,6 +1,8 @@
 package com.daktilo.daktilo_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.lang.NonNull;
 
 import java.util.Objects;
@@ -8,7 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name="CATEGORY")
+@Table(name="category")
 public class Category {
     @Id
     @Column(name="category_id")
@@ -21,7 +23,9 @@ public class Category {
     @Column(name="category_desc")
     private String categoryDesc;
 
+    @JsonIgnore
     @ManyToMany(mappedBy="categories", fetch=FetchType.LAZY)
+    @BatchSize(size=250)
     private Set<Article> articles;
 
     public Category(){
@@ -76,11 +80,12 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return Objects.equals(id, category.id) && categoryName.equals(category.categoryName) && categoryDesc.equals(category.categoryDesc) && Objects.equals(articles, category.articles);
+        return Objects.equals(id, category.id) && categoryName.equals(category.categoryName) &&
+                categoryDesc.equals(category.categoryDesc);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, categoryName, categoryDesc, articles);
+        return Objects.hash(id, categoryName, categoryDesc);
     }
 }

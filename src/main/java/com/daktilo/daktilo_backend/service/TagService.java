@@ -28,10 +28,9 @@ public class TagService {
     public Tag update(UUID id, TagDTO tagDTO){
         Tag tag = dtoMapper.convertToTagEntity(tagDTO);
 
-        tag.setId(id);
-
         return tagRepository.save(tag);
     }
+
 
     /*public void batchSaveTags(Set<Tag> tags, UUID articleId){
         if(articleId != null){
