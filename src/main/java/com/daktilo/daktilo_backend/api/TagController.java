@@ -55,7 +55,7 @@ public class TagController {
     }
 
     @DeleteMapping(path="/delete/")
-    public ResponseEntity deleteArticle(@RequestBody Tag tag){
+    public ResponseEntity deleteArticle(@PathVariable(name="tag") Tag tag){
         try{
             tagRepository.delete(tag);
             return ResponseEntity.ok().body("Silme işlemi başarılı");

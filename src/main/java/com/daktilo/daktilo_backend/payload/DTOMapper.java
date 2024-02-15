@@ -103,6 +103,12 @@ public class DTOMapper {
             tag = new Tag();
             tag.setTagName(tagDTO.getTagName());
         }
+
+        Article newArticle = articleRepository.findById(tagDTO.getArticleId()).orElse(null);
+        if(newArticle!=null){
+            tag.getArticles().add(newArticle);
+        }
+
         return tag;
     }
 
