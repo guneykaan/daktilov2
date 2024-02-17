@@ -2,12 +2,10 @@ package com.daktilo.daktilo_backend.entity;
 
 import jakarta.persistence.*;
 
-import java.sql.Blob;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.List;
 
-@Entity
 @Table(name="author", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"author_name"}),
         @UniqueConstraint(columnNames = {"email"})

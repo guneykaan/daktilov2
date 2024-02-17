@@ -3,13 +3,11 @@ package com.daktilo.daktilo_backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.BatchSize;
-import org.springframework.lang.NonNull;
 
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity
 @Table(name="category")
 public class Category {
     @Id

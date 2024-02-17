@@ -41,18 +41,18 @@ public class CategoryController {
         return categoryRepository.findByCategoryName(name).orElse(null);
     }
 
-    @PostMapping(path="/add")
+    @PostMapping(path="/admin/add")
     public Category addCategory(@NonNull @RequestBody CategoryDTO categoryDTO){
         return categoryService.add(categoryDTO);
     }
 
-    @PutMapping(path="/edit/{id}")
+    @PutMapping(path="/admin/edit/{id}")
     public Category updateCategory(@NonNull @RequestBody CategoryDTO categoryDTO,
                                @PathVariable("id") UUID id){
         return categoryService.update(id,categoryDTO);
     }
 
-    @DeleteMapping(path="/delete/{id}")
+    @DeleteMapping(path="/admin/delete/{id}")
     public void deleteArticle(@PathVariable(name="id") UUID id){
         categoryRepository.deleteById(id);
     }
