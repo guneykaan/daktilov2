@@ -1,19 +1,19 @@
 package com.daktilo.daktilo_backend.entity;
 
 import jakarta.persistence.*;
-import org.springframework.lang.NonNull;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
+@Entity
 @Table(name="users", uniqueConstraints = {
         @UniqueConstraint(columnNames={"username"}),
         @UniqueConstraint(columnNames={"email"}),
         @UniqueConstraint(columnNames = {"phoneNumber"})
 })
-public class User implements UserDetails {
+public class User {
 
     @Id
     @Column(name="id")
@@ -45,27 +45,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy="user")
     private List<Comment> commentList;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name="USER_ROLE",
-            joinColumns = {@JoinColumn(name="USER_ID")},
-            inverseJoinColumns = {@JoinColumn(name="ROLE_ID")})
-    private Set<Role> userRoles=new HashSet<Role>();
 
-    @Column(name="NONEXPIRED")
-    private final boolean isAccountNonExpired=true;
-
-    @Column(name="NONLOCKED")
-    private final boolean isAccountNonLocked=true;
-
-    @Column(name="CREDNONEXPIRED")
-    private final boolean isCredentialsNonExpired=true;
-
-    @NonNull
-    @Column(name="ENABLED")
-    private final boolean isEnabled=true;
-
-    @Transient
-    private Collection<? extends GrantedAuthority> grantedAuthorities;
+    //TODO revisit
+//    @Column(name="user_profile_pic")
+//    private Blob userProfilePic;
 
     public UUID getId() {
         return id;
@@ -91,15 +74,6 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return grantedAuthorities;
-    }
-
-    public void setAuthorities(Collection<? extends GrantedAuthority> grantedAuthorities) {
-        this.grantedAuthorities = grantedAuthorities;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -110,19 +84,6 @@ public class User implements UserDetails {
 
     public String getUsername() {
         return username;
-    }
-
-    public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
-    }
-    public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
-    }
-    public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
-    }
-    public boolean isEnabled() {
-        return isEnabled;
     }
 
     public void setUsername(String username) {

@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping(path="/{username}")
     public User getByUsername(@PathVariable("username") String username){
-        return userRepository.findByUsername(username).orElse(null);
+        return userRepository.findByUsername(username);
     }
 
     @PostMapping(path="/create")

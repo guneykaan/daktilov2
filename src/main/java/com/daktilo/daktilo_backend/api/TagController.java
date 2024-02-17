@@ -41,7 +41,7 @@ public class TagController {
         }
     }
 
-    @PostMapping(path="/admin/add")
+    @PostMapping(path="/add")
     public ResponseEntity addTag(@NonNull @RequestBody TagDTO tagDTO){
         try{
             return ResponseEntity.ok(tagService.add(tagDTO));
@@ -54,7 +54,7 @@ public class TagController {
         }
     }
 
-    @DeleteMapping(path="/admin/delete/")
+    @DeleteMapping(path="/delete/")
     public ResponseEntity deleteArticle(@PathVariable(name="tag") Tag tag){
         try{
             tagRepository.delete(tag);

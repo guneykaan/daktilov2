@@ -6,7 +6,9 @@ import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
+@Entity
 @Table(name="tag", uniqueConstraints = {
         @UniqueConstraint(columnNames={"tag_name"})
 })
