@@ -4,11 +4,7 @@ import com.daktilo.daktilo_backend.entity.Category;
 import com.daktilo.daktilo_backend.payload.request.CategoryDTO;
 import com.daktilo.daktilo_backend.repository.CategoryRepository;
 import com.daktilo.daktilo_backend.service.CategoryService;
-import com.daktilo.daktilo_backend.util.PageImplCustom;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 

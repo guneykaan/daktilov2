@@ -31,8 +31,6 @@ public class ArticleService {
     public Article update(UUID id, ArticleDTO articleDTO){
         Article article = dtoMapper.convertToArticleEntity(articleDTO,id,"update");
 
-        article.setArticleId(id);
-
         return articleRepository.save(article);
     }
 

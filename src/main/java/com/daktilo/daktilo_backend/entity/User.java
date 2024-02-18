@@ -1,8 +1,11 @@
 package com.daktilo.daktilo_backend.entity;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -13,7 +16,7 @@ import java.util.UUID;
         @UniqueConstraint(columnNames={"email"}),
         @UniqueConstraint(columnNames = {"phoneNumber"})
 })
-public class User {
+public class User implements UserDetails {
 
     @Id
     @Column(name="id")
@@ -40,15 +43,43 @@ public class User {
     private String phoneNumber;
 
     @Column(name="date_joined")
-    private Date dateJoined;
+    private Long dateJoined;
 
     @OneToMany(mappedBy="user")
     private List<Comment> commentList;
 
+    @Column(name="NONEXPIRED")
+    private boolean isAccountNonExpired=true;
 
-    //TODO revisit
-//    @Column(name="user_profile_pic")
-//    private Blob userProfilePic;
+    @Column(name="NONLOCKED")
+    private boolean isAccountNonLocked=true;
+
+    @Column(name="CREDNONEXPIRED")
+    private boolean isCredentialsNonExpired=true;
+
+    @Column(name="ENABLED")
+    private boolean isEnabled=true;
+
+    private String role;
+
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "author", orphanRemoval = false)
+    private List<Article> articles;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
 
     public UUID getId() {
         return id;
@@ -74,6 +105,11 @@ public class User {
         this.lastName = lastName;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -84,6 +120,43 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
     public void setUsername(String username) {
@@ -106,11 +179,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getDateJoined() {
+    public Long getDateJoined() {
         return dateJoined;
     }
 
-    public void setDateJoined(Date dateJoined) {
+    public void setDateJoined(Long dateJoined) {
         this.dateJoined = dateJoined;
     }
 
@@ -121,14 +194,6 @@ public class User {
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
     }
-
-    /*public Blob getUserProfilePic() {
-        return userProfilePic;
-    }
-
-    public void setUserProfilePic(Blob userProfilePic) {
-        this.userProfilePic = userProfilePic;
-    }*/
 
     @Override
     public boolean equals(Object o) {

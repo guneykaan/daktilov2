@@ -1,11 +1,9 @@
 package com.daktilo.daktilo_backend.api;
 
 import com.daktilo.daktilo_backend.entity.Article;
-import com.daktilo.daktilo_backend.entity.Category;
 import com.daktilo.daktilo_backend.entity.Comment;
 import com.daktilo.daktilo_backend.repository.ArticleRepository;
 import com.daktilo.daktilo_backend.repository.CommentRepository;
-import com.daktilo.daktilo_backend.util.PageImplCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

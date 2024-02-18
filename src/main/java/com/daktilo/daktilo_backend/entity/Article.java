@@ -33,7 +33,7 @@ public class Article {
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="author_id")
-    private Author author;
+    private User author;
 
 
     @OneToMany(fetch=FetchType.LAZY,
@@ -96,11 +96,11 @@ public class Article {
         this.tags = tags;
     }
 
-    public Author getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

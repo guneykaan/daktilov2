@@ -1,24 +1,22 @@
-package com.daktilo.daktilo_backend.config;
+package com.daktilo.daktilo_backend.security;
 
+import com.daktilo.daktilo_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.Arrays;
-import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -26,23 +24,30 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    /*
-    @Autowired
-    private UserDetailsService userDetailsService;
 
     @Autowired
-    private AuthenticationEntryPoint unauthorizedHandler;
-
-    @Autowired
-    private UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter;*/
+    private UserService userDetailsService;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize ->
-                        authorize.anyRequest()
+                .formLogin(fLogin -> fLogin
+                        .loginProcessingUrl("/panel/v1/auth/login")
+                        .defaultSuccessUrl("/article"))
+                .rememberMe(rm -> rm
+                        .key("secret-key")
+                        .rememberMeCookieName("remember-me")
+                        .tokenValiditySeconds(86400))
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/article"))
+                .sessionManagement(sessMgmt -> sessMgmt
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/admin/**")
+                        .authenticated()
+                        .anyRequest()
                         .permitAll())
+                .userDetailsService(userDetailsService)
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
@@ -58,6 +63,11 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",configuration);
         return source;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

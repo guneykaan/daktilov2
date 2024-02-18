@@ -2,15 +2,15 @@ package com.daktilo.daktilo_backend.payload;
 
 import com.daktilo.daktilo_backend.entity.*;
 import com.daktilo.daktilo_backend.payload.request.*;
-import com.daktilo.daktilo_backend.repository.ArticleRepository;
-import com.daktilo.daktilo_backend.repository.AuthorRepository;
-import com.daktilo.daktilo_backend.repository.CategoryRepository;
-import com.daktilo.daktilo_backend.repository.TagRepository;
+import com.daktilo.daktilo_backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -18,10 +18,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class DTOMapper {
-
-    @Autowired
-    AuthorRepository authorRepository;
-
     @Autowired
     CategoryRepository categoryRepository;
 
@@ -31,19 +27,12 @@ public class DTOMapper {
     @Autowired
     ArticleRepository articleRepository;
 
-    public Author convertToAuthorEntity(AuthorDTO authorDTO){
-        Author author = new Author();
+    @Autowired
+    UserRepository userRepository;
 
-        author.setUsername(authorDTO.getUsername());
-        author.setAuthorName(authorDTO.getAuthorName());
-        author.setAuthorEmail(authorDTO.getAuthorEmail());
-        author.setPassword(authorDTO.getPassword());
-        author.setAuthorAccountStatus(authorDTO.isAuthorAccountStatus());
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
-        return author;
-    }
-
-    //TODO böyle bi entity dönünce update sırasında .save() patlıyor mu?
     public Category convertToCategoryEntity(CategoryDTO categoryDTO){
         Category category = categoryRepository.findByCategoryName(categoryDTO.getCategoryName()).orElse(null);
 
@@ -76,7 +65,7 @@ public class DTOMapper {
         article.setTags(articleDTO.getTags().stream().map(
                 this::convertToTagEntity).collect(Collectors.toSet())
         );
-        article.setAuthor(authorRepository.findById(articleDTO.getAuthorId()).orElse(null));
+        article.setAuthor(userRepository.findById(articleDTO.getAuthorId()).orElse(null));
         article.setDatePosted(articleDTO.getDatePosted());
         article.setArticleContent(articleDTO.getArticleContent());
         article.setArticleTitle(articleDTO.getArticleTitle());
@@ -85,15 +74,6 @@ public class DTOMapper {
         article.setInSlider(articleDTO.isInSlider());
 
         return article;
-    }
-
-    public Admin convertToAdminEntity(AdminDTO adminDTO){
-        Admin admin = new Admin();
-
-        admin.setUsername(adminDTO.getUsername());
-        admin.setPassword(adminDTO.getPassword());
-        admin.setRole(adminDTO.getRole());
-        return admin;
     }
 
     public Tag convertToTagEntity(TagDTO tagDTO){
@@ -110,6 +90,34 @@ public class DTOMapper {
         }
 
         return tag;
+    }
+
+    public User convertToUserEntity(UserDTO userDTO, UUID id){
+        User user;
+        if(id!=null)
+            user = userRepository.findById(id).orElse(null);
+        else
+            user = userRepository.findByUsername(userDTO.getUsername()).orElse(null);
+
+        if(user!=null) {
+            user.setFirstName(userDTO.getFirstName());
+            user.setLastName(userDTO.getLastName());
+            user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+            user.setUsername(userDTO.getUsername());
+            user.setEmail(user.getEmail());
+            user.setPhoneNumber(user.getPhoneNumber());
+            Long dateJoined = userDTO.getDateJoined();
+            if(dateJoined == null){
+                dateJoined = ZonedDateTime.now(ZoneId.of("Europe/Istanbul")).toInstant().toEpochMilli();
+            }
+            user.setDateJoined(dateJoined);
+            user.setAccountNonExpired(userDTO.isAccountNonExpired());
+            user.setCredentialsNonExpired(userDTO.isCredentialsNonExpired());
+            user.setEnabled(userDTO.isEnabled());
+            user.setAccountNonLocked(userDTO.isAccountNonLocked());
+        }
+
+        return user;
     }
 
 

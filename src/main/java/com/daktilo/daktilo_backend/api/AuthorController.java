@@ -1,11 +1,12 @@
 package com.daktilo.daktilo_backend.api;
 
+import com.daktilo.daktilo_backend.constants.Role;
 import com.daktilo.daktilo_backend.entity.Article;
-import com.daktilo.daktilo_backend.entity.Author;
-import com.daktilo.daktilo_backend.payload.request.AuthorDTO;
+import com.daktilo.daktilo_backend.entity.User;
+import com.daktilo.daktilo_backend.payload.request.UserDTO;
 import com.daktilo.daktilo_backend.repository.ArticleRepository;
-import com.daktilo.daktilo_backend.repository.AuthorRepository;
-import com.daktilo.daktilo_backend.service.AuthorService;
+import com.daktilo.daktilo_backend.repository.UserRepository;
+import com.daktilo.daktilo_backend.service.UserService;
 import jakarta.persistence.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,10 +22,10 @@ import java.util.UUID;
 public class AuthorController {
 
     @Autowired
-    AuthorRepository authorRepository;
+    UserService userService;
 
     @Autowired
-    AuthorService authorService;
+    UserRepository userRepository;
 
     @Autowired
     ArticleRepository articleRepository;
@@ -35,7 +36,7 @@ public class AuthorController {
             @RequestParam(name="size", defaultValue="3") int size){
         try {
             Pageable pageRequest = PageRequest.of(page, size);
-            Page<Author> authors = authorRepository.findAll(pageRequest);
+            Page<User> authors = userRepository.findAllByRole(pageRequest, Role.ROLE_AUTHOR.toString());
 
             if (authors!=null && !authors.isEmpty()){
                 return ResponseEntity.ok(authors);
@@ -54,7 +55,7 @@ public class AuthorController {
     @GetMapping("/{id}")
     public ResponseEntity getOneById(@PathVariable UUID id){
         try{
-            Author author = authorRepository.findById(id).orElse(null);
+            User author = userRepository.findById(id).orElse(null);
             if(author!=null){
                 return ResponseEntity.ok(author);
             }else{
@@ -94,14 +95,14 @@ public class AuthorController {
         }
     }
 
-    @PostMapping("/{id}/deactivate/{status}")
+    @PutMapping("/{id}/deactivate/{status}")
     public ResponseEntity changeAuthorAccountStatus(@PathVariable(name="id") UUID id,
                                           @PathVariable(name="status") boolean status){
         try{
-            Author author = authorRepository.findById(id).orElse(null);
+            User author = userRepository.findById(id).orElse(null);
             if(author!=null){
-                author.setAuthorAccountStatus(status);
-                Author saved = authorRepository.save(author);
+                author.setAccountNonLocked(status);
+                User saved = userRepository.save(author);
                 return ResponseEntity.ok(saved);
             }else{
                 return ResponseEntity.badRequest().body("Yazar bulunamadı.");
@@ -116,9 +117,10 @@ public class AuthorController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addAuthor(@RequestBody AuthorDTO authorDTO){
+    public ResponseEntity addAuthor(@RequestBody UserDTO userDTO){
         try{
-            Author author = authorService.add(authorDTO);
+            userDTO.setRole(Role.ROLE_AUTHOR.toString());
+            User author = userService.addUser(userDTO);
             return ResponseEntity.ok(author);
         }catch(PersistenceException p){
             p.printStackTrace();
@@ -132,9 +134,9 @@ public class AuthorController {
     @PutMapping("/edit/{id}")
     public ResponseEntity editAuthorAccount(
             @PathVariable(name="id") UUID id,
-            @RequestBody AuthorDTO authorDTO){
+            @RequestBody UserDTO userDTO){
         try{
-            Author author = authorService.update(id,authorDTO);
+            User author = userService.update(id,userDTO);
             return ResponseEntity.ok(author);
         }catch(PersistenceException p){
             p.printStackTrace();
@@ -148,10 +150,10 @@ public class AuthorController {
     @DeleteMapping("/{id}")
     public ResponseEntity removeAuthor(@PathVariable(name="id") UUID id){
         try {
-            Author author = authorRepository.findById(id).orElse(null);
+            User author = userRepository.findById(id).orElse(null);
 
             if (author != null) {
-                authorRepository.deleteById(id);
+                userRepository.deleteById(id);
                 return ResponseEntity.ok().body("Silme işlemi başarılı");
             } else {
                 return ResponseEntity.badRequest().body("Silmek istediğiniz yazar bulunamadı.");
