@@ -217,7 +217,7 @@ public class ArticleController {
         return articleRepository.findById(id).orElse(null);
     }
 
-    @PostMapping(path="/admin/add")
+    @PostMapping(path="/author/add")
     @Transactional
     public ResponseEntity addArticle(@NonNull @RequestBody ArticleDTO articleDTO){
        ResponseEntity rp = validate(articleDTO);
@@ -245,7 +245,7 @@ public class ArticleController {
        }
     }
 
-    @PutMapping(path="/admin/edit/{id}")
+    @PutMapping(path="/author/edit/{id}")
     @Transactional
     public ResponseEntity updateArticle(@NonNull @RequestBody ArticleDTO articleDTO,
                                @PathVariable("id") UUID id){
@@ -265,7 +265,7 @@ public class ArticleController {
         }
     }
 
-    @DeleteMapping(path="/admin/delete/{id}")
+    @DeleteMapping(path="/author/delete/{id}")
     @Transactional
     public ResponseEntity deleteArticle(@PathVariable(name="id") UUID id){
         try {
@@ -289,7 +289,7 @@ public class ArticleController {
     }
 
 
-    @PutMapping(path="/admin/activate/{id}/{activeStatus}")
+    @PutMapping(path="/author/activate/{id}/{activeStatus}")
     @Transactional
     public ResponseEntity changeActiveStatus(@PathVariable(name="id") UUID id,
                                       @PathVariable("activeStatus") boolean activeStatus){

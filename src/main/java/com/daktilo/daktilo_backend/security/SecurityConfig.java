@@ -1,5 +1,6 @@
 package com.daktilo.daktilo_backend.security;
 
+import com.daktilo.daktilo_backend.constants.Role;
 import com.daktilo.daktilo_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +32,9 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
+                .userDetailsService(userDetailsService)
+                .cors(withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(fLogin -> fLogin
                         .loginProcessingUrl("/panel/v1/auth/login")
                         .defaultSuccessUrl("/article"))
@@ -44,12 +48,11 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/admin/**")
+                        .hasRole(Role.ADMIN.toString())
+                        .requestMatchers("/author/**")
                         .authenticated()
                         .anyRequest()
                         .permitAll())
-                .userDetailsService(userDetailsService)
-                .cors(withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 

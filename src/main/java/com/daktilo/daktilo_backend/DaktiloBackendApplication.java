@@ -11,4 +11,9 @@ public class DaktiloBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DaktiloBackendApplication.class, args);
 	}
+
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder(){
+		return new BCryptPasswordEncoder();
+	}
 }

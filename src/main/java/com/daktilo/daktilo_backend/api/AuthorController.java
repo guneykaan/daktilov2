@@ -36,7 +36,7 @@ public class AuthorController {
             @RequestParam(name="size", defaultValue="3") int size){
         try {
             Pageable pageRequest = PageRequest.of(page, size);
-            Page<User> authors = userRepository.findAllByRole(pageRequest, Role.ROLE_AUTHOR.toString());
+            Page<User> authors = userRepository.findAllByRole(pageRequest, Role.AUTHOR.toString());
 
             if (authors!=null && !authors.isEmpty()){
                 return ResponseEntity.ok(authors);
@@ -119,7 +119,7 @@ public class AuthorController {
     @PostMapping("/add")
     public ResponseEntity addAuthor(@RequestBody UserDTO userDTO){
         try{
-            userDTO.setRole(Role.ROLE_AUTHOR.toString());
+            userDTO.setRole(Role.AUTHOR.toString());
             User author = userService.addUser(userDTO);
             return ResponseEntity.ok(author);
         }catch(PersistenceException p){

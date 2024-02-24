@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/admin/panel/v1")
+@RequestMapping("/admin/")
 //TODO spring security
 public class AdminController {
 

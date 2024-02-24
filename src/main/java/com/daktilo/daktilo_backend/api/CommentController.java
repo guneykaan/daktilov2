@@ -18,7 +18,7 @@ import java.util.UUID;
 @Deprecated
 public class CommentController {
 
-    @Autowired
+  /*  @Autowired
     CommentRepository commentRepository;
     @Autowired
     ArticleRepository articleRepository;
@@ -28,7 +28,7 @@ public class CommentController {
             @RequestParam(name="page", defaultValue="0") int page,
             @RequestParam(name="size", defaultValue="3") int size){
         Pageable pageRequest = PageRequest.of(page,size);
-        List<Comment> comments = commentRepository.findAll();
+        List<Comment> comments = commentRepository.findAll(pag);
 
         return PageImplCustom.createPage(comments, pageRequest);    }
 
@@ -61,5 +61,5 @@ public class CommentController {
     @DeleteMapping("/delete/{id}")
     public void deleteComment(@PathVariable(name="{id}") UUID id){
         commentRepository.deleteById(id);
-    }
+    }*/
 }
