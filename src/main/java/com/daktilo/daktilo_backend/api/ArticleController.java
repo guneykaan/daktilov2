@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/article")
 public class ArticleController {
 
     @Autowired
@@ -31,7 +32,7 @@ public class ArticleController {
     @Autowired
     EntityManager entityManager;
 
-    @GetMapping("/article")
+    @GetMapping
     @Transactional
     public ResponseEntity getAllOrderedByDate(
             @RequestParam(name="page", defaultValue="0") int page,
@@ -56,7 +57,7 @@ public class ArticleController {
     }
 
     //gündem ayrı bir category olduğu için burası kullanılır ve tarihe göre sıralar
-    @GetMapping(path="/article/category/{category}")
+    @GetMapping(path="/category/{category}")
     @Transactional
     public ResponseEntity findByCategory(
             @PathVariable("category") String category,
@@ -82,7 +83,7 @@ public class ArticleController {
     }
 
     //todo timestamp-date'e aralığına göre ver
-    @GetMapping(path="/article/popular")
+    @GetMapping(path="/popular")
     @Transactional
     public ResponseEntity getAllOrderedByPopular(
             @PathVariable(value="from",required = false) Timestamp from,
@@ -110,7 +111,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping(path="/article/slider")
+    @GetMapping(path="/slider")
     @Transactional
     public ResponseEntity getArticlesInSlider(
             @PathVariable(value = "category", required = false) String categoryName,
@@ -142,7 +143,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping(path="/article/searchByTags")
+    @GetMapping(path="/searchByTags")
     @Transactional
     public ResponseEntity findByTag(
             @RequestParam(name="tags") List<String> tags,
@@ -166,7 +167,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping(path="/article/read/{id}")
+    @GetMapping(path="/read/{id}")
     @Transactional
     public ResponseEntity readArticle(@PathVariable("id") UUID id){
         try{
@@ -189,7 +190,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping(path="/article/search")
+    @GetMapping(path="/search")
     @Transactional
     public ResponseEntity searchArticles(@RequestParam("keyword") String keyword){
         try{
@@ -216,7 +217,7 @@ public class ArticleController {
         return articleRepository.findById(id).orElse(null);
     }
 
-    @PostMapping(path="/author/article/add")
+    @PostMapping(path="/v2/add")
     @Transactional
     public ResponseEntity addArticle(@NonNull @RequestBody ArticleDTO articleDTO){
        ResponseEntity rp = validate(articleDTO);
@@ -244,7 +245,7 @@ public class ArticleController {
        }
     }
 
-    @PutMapping(path="/author/article/edit/{id}")
+    @PutMapping(path="/v2/edit/{id}")
     @Transactional
     public ResponseEntity updateArticle(@NonNull @RequestBody ArticleDTO articleDTO,
                                @PathVariable("id") UUID id){
@@ -264,7 +265,7 @@ public class ArticleController {
         }
     }
 
-    @DeleteMapping(path="/author/article/delete/{id}")
+    @DeleteMapping(path="/v2/delete/{id}")
     @Transactional
     public ResponseEntity deleteArticle(@PathVariable(name="id") UUID id){
         try {
@@ -288,7 +289,7 @@ public class ArticleController {
     }
 
 
-    @PutMapping(path="/author/activate/{id}/{activeStatus}")
+    @PutMapping(path="/v2/activate/{id}/{activeStatus}")
     @Transactional
     public ResponseEntity changeActiveStatus(@PathVariable(name="id") UUID id,
                                       @PathVariable("activeStatus") boolean activeStatus){

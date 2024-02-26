@@ -95,7 +95,7 @@ public class AuthorController {
         }
     }
 
-    @PutMapping("/{id}/deactivate/{status}")
+    @PutMapping("/v2/{id}/deactivate/{status}")
     public ResponseEntity changeAuthorAccountStatus(@PathVariable(name="id") UUID id,
                                           @PathVariable(name="status") boolean status){
         try{
@@ -116,7 +116,7 @@ public class AuthorController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping("/v2/add")
     public ResponseEntity addAuthor(@RequestBody UserDTO userDTO){
         try{
             userDTO.setRole(Role.AUTHOR.toString());
@@ -131,7 +131,7 @@ public class AuthorController {
         }
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/v2/edit/{id}")
     public ResponseEntity editAuthorAccount(
             @PathVariable(name="id") UUID id,
             @RequestBody UserDTO userDTO){
@@ -147,7 +147,7 @@ public class AuthorController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/v2/{id}")
     public ResponseEntity removeAuthor(@PathVariable(name="id") UUID id){
         try {
             User author = userRepository.findById(id).orElse(null);

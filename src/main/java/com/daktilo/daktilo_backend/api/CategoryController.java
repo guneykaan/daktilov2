@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("category")
+@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
@@ -37,18 +37,18 @@ public class CategoryController {
         return categoryRepository.findByCategoryName(name).orElse(null);
     }
 
-    @PostMapping(path="/add")
+    @PostMapping(path="/v2/add")
     public Category addCategory(@NonNull @RequestBody CategoryDTO categoryDTO){
         return categoryService.add(categoryDTO);
     }
 
-    @PutMapping(path="/edit/{id}")
+    @PutMapping(path="/v2/edit/{id}")
     public Category updateCategory(@NonNull @RequestBody CategoryDTO categoryDTO,
                                @PathVariable("id") UUID id){
         return categoryService.update(id,categoryDTO);
     }
 
-    @DeleteMapping(path="/delete/{id}")
+    @DeleteMapping(path="/v2/delete/{id}")
     public void deleteArticle(@PathVariable(name="id") UUID id){
         categoryRepository.deleteById(id);
     }

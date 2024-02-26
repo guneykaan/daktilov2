@@ -59,3 +59,11 @@ CREATE TABLE IF NOT EXISTS category_article_map_table (
     FOREIGN KEY (category_id) REFERENCES category (category_id),
     FOREIGN KEY (article_id) REFERENCES article (article_id)
 );
+CREATE TABLE IF NOT EXISTS ADVERTISEMENT (
+    advertisement_id UUID,
+    header VARCHAR(255),
+    ad_url VARCHAR(255),
+    photo_url VARCHAR(255),
+    place VARCHAR(50),
+    is_active BOOLEAN
+    )

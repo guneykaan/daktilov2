@@ -43,10 +43,10 @@ public class SecurityConfig {
                 .sessionManagement(sessMgmt -> sessMgmt
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/admin/**")
+                        .requestMatchers("/admin/**","/advertisement")
                         .hasRole(Role.ADMIN.toString())
-                        .requestMatchers("/author/v2/**","article/v2","category/v2",
-                                "tag/v2","/user","/panel/**")
+                        .requestMatchers("/author/v2/**","article/v2/**","category/v2/**",
+                                "tag/v2/**","/user/**","/panel/**")
                         .authenticated()
                         .anyRequest()
                         .permitAll())

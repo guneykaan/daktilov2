@@ -41,7 +41,7 @@ public class TagController {
         }
     }
 
-    @PostMapping(path="/add")
+    @PostMapping(path="/v2/add")
     public ResponseEntity addTag(@NonNull @RequestBody TagDTO tagDTO){
         try{
             return ResponseEntity.ok(tagService.add(tagDTO));
@@ -54,8 +54,8 @@ public class TagController {
         }
     }
 
-    @DeleteMapping(path="/delete/{tag}")
-    public ResponseEntity deleteArticle(@PathVariable(name="tag") Tag tag){
+    @DeleteMapping(path="/v2/delete/{tag}")
+    public ResponseEntity deleteTag(@PathVariable(name="tag") Tag tag){
         try{
             tagRepository.delete(tag);
             return ResponseEntity.ok().body("Silme işlemi başarılı");
