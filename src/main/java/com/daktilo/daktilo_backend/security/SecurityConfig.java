@@ -14,9 +14,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -35,20 +32,21 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(fLogin -> fLogin
-                        .loginProcessingUrl("/panel/v1/auth/login")
                         .defaultSuccessUrl("/article"))
                 .rememberMe(rm -> rm
                         .key("secret-key")
                         .rememberMeCookieName("remember-me")
                         .tokenValiditySeconds(86400))
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/article"))
+                        .logoutSuccessUrl("/article")
+                        .deleteCookies())
                 .sessionManagement(sessMgmt -> sessMgmt
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/admin/**")
                         .hasRole(Role.ADMIN.toString())
-                        .requestMatchers("/author/**","/panel/**")
+                        .requestMatchers("/author/v2/**","article/v2","category/v2",
+                                "tag/v2","/user","/panel/**")
                         .authenticated()
                         .anyRequest()
                         .permitAll())

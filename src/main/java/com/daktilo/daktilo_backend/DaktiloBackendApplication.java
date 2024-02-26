@@ -38,6 +38,7 @@ public class DaktiloBackendApplication {
 			user.setAccountNonExpired(true);
 			user.setEnabled(true);
 			user.setCredentialsNonExpired(true);
+			user.setRole("ADMIN");
 
 			userRepository.save(user);
 		};

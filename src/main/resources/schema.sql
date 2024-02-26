@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS ARTICLE (
     view_count BIGINT DEFAULT 0,
     author_id UUID,
     in_slider BOOLEAN,
+    picture_url VARCHAR(255),
+    video_url VARCHAR(255),
     FOREIGN KEY (author_id) REFERENCES USERS(id)
 );
 CREATE TABLE IF NOT EXISTS CATEGORY (
