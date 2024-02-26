@@ -35,7 +35,7 @@ public class AuthController {
         String password = user.getPassword();
         boolean matches = bCryptPasswordEncoder.matches(oldPass, password);
         if(matches){
-            user.setPassword(passwordChangeDTO.getNewPassword());
+            user.setPassword(bCryptPasswordEncoder.encode(passwordChangeDTO.getNewPassword()));
             return ResponseEntity.ok("Şifre başarıyla değiştirildi");
         }else{
             return ResponseEntity.badRequest().body("Girdiğiniz eski şifre doğru değil");

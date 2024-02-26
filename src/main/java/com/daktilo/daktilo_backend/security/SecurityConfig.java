@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/admin/**")
                         .hasRole(Role.ADMIN.toString())
-                        .requestMatchers("/author/**")
+                        .requestMatchers("/author/**","/panel/**")
                         .authenticated()
                         .anyRequest()
                         .permitAll())
