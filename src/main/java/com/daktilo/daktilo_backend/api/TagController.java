@@ -54,7 +54,7 @@ public class TagController {
         }
     }
 
-    @DeleteMapping(path="/delete/")
+    @DeleteMapping(path="/delete/{tag}")
     public ResponseEntity deleteArticle(@PathVariable(name="tag") Tag tag){
         try{
             tagRepository.delete(tag);
