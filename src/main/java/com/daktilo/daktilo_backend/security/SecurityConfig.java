@@ -1,5 +1,6 @@
 package com.daktilo.daktilo_backend.security;
 
+import com.daktilo.daktilo_backend.constants.Role;
 import com.daktilo.daktilo_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,11 +26,17 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private static final String[] WHITELIST_URL = {
-            "/auth/signIn","/auth/login","/auth/changePassword"
+            "/auth/signIn","/auth/login","/auth/changePassword",
+            "/user/**","/tag/all","category/get/**","/author/get/**",
 
     };
-    private static final String[] ADMIN_ONLY_URL = {};
-    private static final String[] AUTHOR_ONLY_URL = {};
+    private static final String[] ADMIN_ONLY_URL = {
+            "/admin/**","/advertisement/**","/article/v2/**",
+            "/author/v2/**","/category/v2/**","/tag/v2/**",
+    };
+    private static final String[] AUTHOR_ONLY_URL = {
+            "/article/v2/**","/tag/v2/**"
+    };
 
 
     @Autowired
@@ -49,6 +56,10 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
+                        .requestMatchers(ADMIN_ONLY_URL)
+                        .hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(AUTHOR_ONLY_URL)
+                        .hasRole(Role.AUTHOR.toString())
                         .requestMatchers(WHITELIST_URL)
                         .permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

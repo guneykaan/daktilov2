@@ -1,6 +1,5 @@
 package com.daktilo.daktilo_backend.api;
 
-import com.daktilo.daktilo_backend.entity.Article;
 import com.daktilo.daktilo_backend.entity.User;
 import com.daktilo.daktilo_backend.payload.request.UserDTO;
 import com.daktilo.daktilo_backend.repository.UserRepository;
@@ -8,7 +7,6 @@ import com.daktilo.daktilo_backend.service.UserService;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -30,7 +30,7 @@ public class AuthorController {
     @Autowired
     ArticleRepository articleRepository;
 
-    @GetMapping
+    @GetMapping(name="/get")
     public ResponseEntity getAll(
             @RequestParam(name="page", defaultValue="0") int page,
             @RequestParam(name="size", defaultValue="3") int size){
@@ -52,7 +52,7 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity getOneById(@PathVariable UUID id){
         try{
             User author = userRepository.findById(id).orElse(null);
@@ -70,7 +70,7 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/{id}/articles")
+    @GetMapping("/get/{id}/articles")
     public ResponseEntity getAuthorArticles(
             @RequestParam(name="page", defaultValue="0") int page,
             @RequestParam(name="size", defaultValue="3") int size,

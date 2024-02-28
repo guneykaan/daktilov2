@@ -1,15 +1,18 @@
 package com.daktilo.daktilo_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "TOKEN")
 public class Token {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id")
-    public Integer id;
+    public UUID id;
 
     @Column(name="TOKEN",unique = true)
     public String token;
@@ -24,15 +27,19 @@ public class Token {
     @Column(name="EXPIRED")
     public boolean expired;
 
+    //rethink, graph/subgraphs?
+    //TODO neden bu lazyler istediğimiz gibi çalışmıyor?
+    //TODO configte bi salaklık var.
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     public User user;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

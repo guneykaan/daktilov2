@@ -1,10 +1,13 @@
 package com.daktilo.daktilo_backend.api;
 
+import com.daktilo.daktilo_backend.entity.Token;
+import com.daktilo.daktilo_backend.entity.TokenType;
 import com.daktilo.daktilo_backend.entity.User;
 import com.daktilo.daktilo_backend.payload.request.LoginRequest;
 import com.daktilo.daktilo_backend.payload.request.PasswordChangeDTO;
 import com.daktilo.daktilo_backend.payload.request.SignInRequest;
 import com.daktilo.daktilo_backend.payload.response.AuthenticationResponse;
+import com.daktilo.daktilo_backend.repository.TokenRepository;
 import com.daktilo.daktilo_backend.repository.UserRepository;
 import com.daktilo.daktilo_backend.security.JwtService;
 import com.daktilo.daktilo_backend.service.AuthService;
@@ -32,6 +35,9 @@ public class AuthController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    TokenRepository tokenRepository;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -79,6 +85,14 @@ public class AuthController {
             User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(ResourceNotFoundException::new);
             String jwtToken = jwtService.generateToken(user);
             String refreshToken = jwtService.generateRefreshToken(user);
+
+            Token token = new Token();
+            token.setToken(jwtToken);
+            token.setUser(user);
+            token.setTokenType(TokenType.BEARER);
+            token.setExpired(false);
+            token.setRevoked(false);
+            tokenRepository.save(token);
 
             AuthenticationResponse authResp = new AuthenticationResponse();
             authResp.setUser(user);

@@ -23,7 +23,7 @@ public class TagController {
     @Autowired
     TagService tagService;
 
-    @GetMapping
+    @GetMapping(path="/all")
     public ResponseEntity getAll(
             @RequestParam(name="page", defaultValue="0") int page,
             @RequestParam(name="size", defaultValue="3") int size){

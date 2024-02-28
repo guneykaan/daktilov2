@@ -21,7 +21,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping
+    @GetMapping(name="/get")
     public List<Category> getAll(){
         List<Category> categories = categoryRepository.findAll();
 
@@ -32,7 +32,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping(path="/{name}")
+    @GetMapping(path="/get/{name}")
     public Category findByName(@PathVariable String name){
         return categoryRepository.findByCategoryName(name).orElse(null);
     }
