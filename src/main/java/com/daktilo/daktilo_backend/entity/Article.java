@@ -72,8 +72,10 @@ public class Article {
     @Column(name="in_slider")
     private boolean inSlider;
 
+    @Column(name="picture_url")
     private String pictureUrl;
 
+    @Column(name="video_url")
     private String videoUrl;
 
     public String getPictureUrl() {

@@ -1,7 +1,5 @@
 package com.daktilo.daktilo_backend.payload.request;
 
-import java.util.UUID;
-
 public class UserDTO {
 
     private String firstName;

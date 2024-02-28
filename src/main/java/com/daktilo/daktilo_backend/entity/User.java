@@ -1,5 +1,6 @@
 package com.daktilo.daktilo_backend.entity;
 
+import com.daktilo.daktilo_backend.constants.Role;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,16 +61,28 @@ public class User implements UserDetails {
     @Column(name="ENABLED")
     private boolean isEnabled=true;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(fetch=FetchType.LAZY, mappedBy = "author", orphanRemoval = false)
     private List<Article> articles;
 
-    public String getRole() {
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
+    }
+
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -107,7 +120,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return role.getAuthorities();
     }
 
     public String getPassword() {

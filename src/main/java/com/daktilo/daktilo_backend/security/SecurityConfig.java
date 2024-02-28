@@ -1,15 +1,17 @@
 package com.daktilo.daktilo_backend.security;
 
-import com.daktilo.daktilo_backend.constants.Role;
 import com.daktilo.daktilo_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -22,6 +24,21 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final String[] WHITELIST_URL = {
+            "/auth/signIn","/auth/login","/auth/changePassword"
+
+    };
+    private static final String[] ADMIN_ONLY_URL = {};
+    private static final String[] AUTHOR_ONLY_URL = {};
+
+
+    @Autowired
+    private JwtAuthFilter jwtAuthFilter;
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
+    @Autowired
+    private LogoutHandlerImpl logoutHandler;
+
     @Autowired
     private UserService userDetailsService;
 
@@ -31,25 +48,16 @@ public class SecurityConfig {
                 .userDetailsService(userDetailsService)
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(fLogin -> fLogin
-                        .defaultSuccessUrl("/article"))
-                .rememberMe(rm -> rm
-                        .key("secret-key")
-                        .rememberMeCookieName("remember-me")
-                        .tokenValiditySeconds(86400))
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/article")
-                        .deleteCookies())
-                .sessionManagement(sessMgmt -> sessMgmt
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/admin/**","/advertisement")
-                        .hasRole(Role.ADMIN.toString())
-                        .requestMatchers("/author/v2/**","article/v2/**","category/v2/**",
-                                "tag/v2/**","/user/**","/panel/**")
-                        .authenticated()
-                        .anyRequest()
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers(WHITELIST_URL)
                         .permitAll())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
+                        .addLogoutHandler(logoutHandler)
+                        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()))
                 .build();
     }
 
