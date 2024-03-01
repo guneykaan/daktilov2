@@ -116,21 +116,6 @@ public class AuthorController {
         }
     }
 
-    @PostMapping("/v2/add")
-    public ResponseEntity addAuthor(@RequestBody UserDTO userDTO){
-        try{
-            userDTO.setRole(Role.AUTHOR.toString());
-            User author = userService.addUser(userDTO);
-            return ResponseEntity.ok(author);
-        }catch(PersistenceException p){
-            p.printStackTrace();
-            return ResponseEntity.badRequest().body("Yazar eklemeye çalışırken bir hata oluştu");
-        }catch(Exception e){
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("Yazar eklemeye çalışırken beklenmedik bir hata oluştu");
-        }
-    }
-
     @PutMapping("/v2/edit/{id}")
     public ResponseEntity editAuthorAccount(
             @PathVariable(name="id") UUID id,

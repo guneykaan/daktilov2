@@ -38,7 +38,6 @@ public class SecurityConfig {
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**"
-        //TODO swagger ile ilgili kısımlar prodda silinecek.
     };
     private static final String[] ADMIN_ONLY_URL = {
             "/admin/**","/advertisement/**","/article/v2/**",
