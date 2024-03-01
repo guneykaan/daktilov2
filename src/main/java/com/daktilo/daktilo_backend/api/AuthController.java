@@ -31,6 +31,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/auth")
+//TODO hashed user password DÖNMESİN
 public class AuthController {
 
     @Autowired
@@ -83,16 +84,28 @@ public class AuthController {
         );
         try{
             User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(ResourceNotFoundException::new);
-            String jwtToken = jwtService.generateToken(user);
-            String refreshToken = jwtService.generateRefreshToken(user);
 
-            Token token = new Token();
-            token.setToken(jwtToken);
-            token.setUser(user);
-            token.setTokenType(TokenType.BEARER);
-            token.setExpired(false);
-            token.setRevoked(false);
-            tokenRepository.save(token);
+            Token existingUserToken = user.getTokens().stream().filter(
+                    token-> !token.isRevoked() && !token.isExpired()
+            ).findFirst().orElse(new Token());
+
+            String refreshToken = jwtService.generateRefreshToken(user);
+            String jwtToken;
+            if (existingUserToken.isExpired() || existingUserToken.isRevoked()){
+                existingUserToken.setExpired(true);
+                existingUserToken.setRevoked(true);
+                jwtToken = jwtService.generateToken(user);
+
+                Token token = new Token();
+                token.setToken(jwtToken);
+                token.setUser(user);
+                token.setTokenType(TokenType.BEARER);
+                token.setExpired(false);
+                token.setRevoked(false);
+                tokenRepository.save(token);
+            } else {
+                jwtToken = existingUserToken.getToken();
+            }
 
             AuthenticationResponse authResp = new AuthenticationResponse();
             authResp.setUser(user);
@@ -100,7 +113,8 @@ public class AuthController {
             authResp.setRefreshToken(refreshToken);
             return ResponseEntity.ok(authResp);
         }catch(ResourceNotFoundException rnfe){
-           return ResponseEntity.badRequest().body("Giriş yapmaya çalıştığınız email ile kayıtlı bir kullanıcı bulunamadı");
+            rnfe.printStackTrace();
+            return ResponseEntity.badRequest().body("Giriş yapmaya çalıştığınız email ile kayıtlı bir kullanıcı bulunamadı");
         }
     }
 

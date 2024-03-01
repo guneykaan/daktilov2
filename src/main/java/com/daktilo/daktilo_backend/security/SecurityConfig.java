@@ -28,6 +28,7 @@ public class SecurityConfig {
     private static final String[] WHITELIST_URL = {
             "/auth/signIn","/auth/login","/auth/changePassword",
             "/user/**","/tag/all","category/get/**","/author/get/**",
+            "/error"
 
     };
     private static final String[] ADMIN_ONLY_URL = {
@@ -57,9 +58,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(ADMIN_ONLY_URL)
-                        .hasAnyAuthority("ROLE_ADMIN")
+                        .hasRole(Role.ADMIN.name())
                         .requestMatchers(AUTHOR_ONLY_URL)
-                        .hasRole(Role.AUTHOR.toString())
+                        .hasRole(Role.AUTHOR.name())
                         .requestMatchers(WHITELIST_URL)
                         .permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

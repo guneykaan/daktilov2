@@ -7,13 +7,15 @@ import com.daktilo.daktilo_backend.service.UserService;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/admin/")
+@RequestMapping("/admin")
 //TODO spring security
 public class AdminController {
 
@@ -22,6 +24,11 @@ public class AdminController {
 
     @Autowired
     UserRepository userRepository;
+
+    @GetMapping
+    public List<User> getEveryone(){
+        return userRepository.findAll();
+    }
 
     @PostMapping("/add/user")
     @Transactional
@@ -69,6 +76,11 @@ public class AdminController {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Silme işlemi sırasında beklenmedik bir hata oluştu.");
         }
+    }
+
+    @PutMapping(path="/update/{userId}/user-role")
+    public ResponseEntity updateUserRole(@PathVariable("userId") UUID id){
+        return null;
     }
 
 }
