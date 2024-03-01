@@ -11,6 +11,7 @@ import com.daktilo.daktilo_backend.repository.TokenRepository;
 import com.daktilo.daktilo_backend.repository.UserRepository;
 import com.daktilo.daktilo_backend.security.JwtService;
 import com.daktilo.daktilo_backend.service.AuthService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -52,6 +53,7 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+
     @PostMapping("/signIn")
     @Transactional
     public ResponseEntity signIn(@RequestBody SignInRequest signInRequest){
@@ -89,9 +91,21 @@ public class AuthController {
                     token-> !token.isRevoked() && !token.isExpired()
             ).findFirst().orElse(new Token());
 
+            String existingUserTokenString = existingUserToken.getToken();
+
             String refreshToken = jwtService.generateRefreshToken(user);
             String jwtToken;
-            if (existingUserToken.isExpired() || existingUserToken.isRevoked()){
+            boolean isValid = false;
+            try{
+                if(existingUserTokenString!=null && !existingUserTokenString.isEmpty())
+                    isValid = jwtService.isTokenValid(existingUserTokenString, user);
+            }catch(ExpiredJwtException eje){
+                eje.printStackTrace();
+            }
+
+            if (existingUserToken.isExpired() ||
+                    existingUserToken.isRevoked() ||
+                        !isValid){
                 existingUserToken.setExpired(true);
                 existingUserToken.setRevoked(true);
                 jwtToken = jwtService.generateToken(user);

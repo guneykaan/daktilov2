@@ -1,5 +1,6 @@
 package com.daktilo.daktilo_backend.api;
 
+import com.daktilo.daktilo_backend.constants.Role;
 import com.daktilo.daktilo_backend.entity.User;
 import com.daktilo.daktilo_backend.payload.request.UserDTO;
 import com.daktilo.daktilo_backend.repository.UserRepository;
@@ -7,7 +8,6 @@ import com.daktilo.daktilo_backend.service.UserService;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +25,7 @@ public class AdminController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping
-    public List<User> getEveryone(){
-        return userRepository.findAll();
-    }
+    private List<Role> roles = List.of(Role.ADMIN,Role.AUTHOR,Role.READER);
 
     @PostMapping("/add/user")
     @Transactional
@@ -79,8 +76,21 @@ public class AdminController {
     }
 
     @PutMapping(path="/update/{userId}/user-role")
-    public ResponseEntity updateUserRole(@PathVariable("userId") UUID id){
-        return null;
+    public ResponseEntity updateUserRole(@PathVariable("userId") UUID id, @RequestBody String role){
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            Role newUserRole = roles.stream().filter(
+                    r -> r.equals(user.getRole())
+            ).findFirst().orElse(null);
+            if (newUserRole == null) {
+                return ResponseEntity.badRequest().body("Lütfen rolünü değiştirmek istediğiniz kullanıcı için yeni bir rol tanımlayınız");
+            }
+            user.setRole(newUserRole);
+            userRepository.save(user);
+            return ResponseEntity.ok(user);
+        }else{
+            return ResponseEntity.badRequest().body("Aradığınız kullanıcı bulunamadı.");
+        }
     }
 
 }

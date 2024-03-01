@@ -25,7 +25,7 @@ public class CategoryService {
     }
 
     public Category update(UUID id, CategoryDTO categoryDTO){
-        Category category = dtoMapper.convertToCategoryEntity(categoryDTO);
+        Category category = dtoMapper.convertToCategoryEntity(id,categoryDTO);
 
         return categoryRepository.save(category);
     }

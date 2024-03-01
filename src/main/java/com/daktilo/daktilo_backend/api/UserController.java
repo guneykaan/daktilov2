@@ -41,12 +41,12 @@ public class UserController {
         }
     }
 
-    @GetMapping(path="/{id}")
+    @GetMapping("/{id}")
     public User getById(@PathVariable("id") UUID id){
         return userRepository.findById(id).orElse(null);
     }
 
-    @GetMapping(path="/{username}")
+    @GetMapping("/{username}")
     public User getByUsername(@PathVariable("username") String username){
         return userRepository.findByUsername(username).orElse(null);
     }

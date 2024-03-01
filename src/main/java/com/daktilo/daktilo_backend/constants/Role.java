@@ -24,7 +24,6 @@ public enum Role {
     ),
     READER(Collections.emptySet());
 
-
     private Set<Permission> permissions;
 
 

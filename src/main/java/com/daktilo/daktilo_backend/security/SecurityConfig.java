@@ -27,9 +27,18 @@ public class SecurityConfig {
 
     private static final String[] WHITELIST_URL = {
             "/auth/signIn","/auth/login","/auth/changePassword",
-            "/user/**","/tag/all","category/get/**","/author/get/**",
-            "/error"
-
+            "/user/**","/tag/v1/**","/category/v1/**","/author/v1/**",
+            "/error","/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**"
+        //TODO swagger ile ilgili kısımlar prodda silinecek.
     };
     private static final String[] ADMIN_ONLY_URL = {
             "/admin/**","/advertisement/**","/article/v2/**",

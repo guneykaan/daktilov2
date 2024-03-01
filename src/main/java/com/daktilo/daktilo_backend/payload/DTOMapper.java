@@ -34,13 +34,14 @@ public class DTOMapper {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Category convertToCategoryEntity(CategoryDTO categoryDTO){
-        Category category = categoryRepository.findByCategoryName(categoryDTO.getCategoryName()).orElse(null);
+        return convertToCategoryEntity(null,categoryDTO);
+    }
 
-        if(category==null) {
-            category = new Category();
-            category.setCategoryName(categoryDTO.getCategoryName());
-            category.setCategoryDesc(categoryDTO.getCategoryDesc());
-        }
+    public Category convertToCategoryEntity(UUID id,CategoryDTO categoryDTO){
+        Category category = categoryRepository.findById(id).orElse(new Category());
+
+        category.setCategoryName(categoryDTO.getCategoryName());
+        category.setCategoryDesc(categoryDTO.getCategoryDesc());
         return category;
     }
 

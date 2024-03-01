@@ -130,7 +130,7 @@ public class AdvertisementController {
         }
     }
 
-    @DeleteMapping(path="/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @Transactional
     public ResponseEntity deleteAdvertisement(@PathVariable(name="id") UUID id){
         try {

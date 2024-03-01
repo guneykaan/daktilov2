@@ -23,7 +23,7 @@ public class TagController {
     @Autowired
     TagService tagService;
 
-    @GetMapping(path="/all")
+    @GetMapping("/v1")
     public ResponseEntity getAll(
             @RequestParam(name="page", defaultValue="0") int page,
             @RequestParam(name="size", defaultValue="3") int size){
@@ -41,7 +41,7 @@ public class TagController {
         }
     }
 
-    @PostMapping(path="/v2/add")
+    @PostMapping("/v2/add")
     public ResponseEntity addTag(@NonNull @RequestBody TagDTO tagDTO){
         try{
             return ResponseEntity.ok(tagService.add(tagDTO));
@@ -54,7 +54,7 @@ public class TagController {
         }
     }
 
-    @DeleteMapping(path="/v2/delete/{tag}")
+    @DeleteMapping("/v2/delete/{tag}")
     public ResponseEntity deleteTag(@PathVariable(name="tag") Tag tag){
         try{
             tagRepository.delete(tag);
