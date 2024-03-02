@@ -9,18 +9,15 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name="tag", uniqueConstraints = {
-        @UniqueConstraint(columnNames={"tag_name"})
-})
+@Table(name="tag")
 public class Tag {
-    //Todo
     @Id
     @Column(name="tag_name")
     private String tagName;
 
-    @JsonIgnore
     @ManyToMany(fetch= FetchType.LAZY, mappedBy="tags")
     @BatchSize(size=100)
+    @JsonIgnore
     private List<Article> articles;
 
     public String getTagName() {

@@ -4,18 +4,6 @@ TODO
 *revisit controller and service layout depending on the requirements from frontend
     *search vs vs
 
-*spring security implementation,
-    admin login ve author login sadece
-use google auth??
-
-
-*requestBody-entity aynı olmaması gereken durumları düşün
-
-*update method test
-*password encryption
-*video ve fotoğraf tutma
-
-
 *eager fetch-lazy fetch bazı yerlerde istediğim gibi çalışmıyor
     -> jsonignore yerine başka bi çözüm bul
     -> native sql

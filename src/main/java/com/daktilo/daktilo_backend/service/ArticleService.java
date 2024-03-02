@@ -8,6 +8,7 @@ import com.daktilo.daktilo_backend.repository.ArticleRepository;
 import com.daktilo.daktilo_backend.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.UUID;
@@ -22,6 +23,7 @@ public class ArticleService {
     @Autowired
     DTOMapper dtoMapper;
 
+    @Transactional
     public Article add(ArticleDTO articleDTO){
         Article article = dtoMapper.convertToArticleEntity(articleDTO,null,"add");
 

@@ -1,6 +1,7 @@
 package com.daktilo.daktilo_backend.entity;
 
 import com.daktilo.daktilo_backend.constants.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -64,7 +65,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy = "author", orphanRemoval = false)
+    @JsonIgnore
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "author")
     private List<Article> articles;
 
     @OneToMany(mappedBy = "user")

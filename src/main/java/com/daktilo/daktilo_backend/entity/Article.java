@@ -1,5 +1,6 @@
 package com.daktilo.daktilo_backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.BatchSize;
 
@@ -18,13 +19,14 @@ public class Article {
     private UUID articleId;
 
     //sistemde çok fazla category bulunmasını beklemiyoruz
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "CATEGORY_ARTICLE_MAP_TABLE",
             joinColumns = {@JoinColumn(name = "article_id")},
             inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private Set<Category> categories;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name="TAG_ARTICLE_MAP_TABLE",
     joinColumns = {@JoinColumn(name="article_id")},
     inverseJoinColumns = {@JoinColumn(name="tag_name")})
@@ -33,6 +35,7 @@ public class Article {
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="author_id")
+    @JsonIgnore
     private User author;
 
 

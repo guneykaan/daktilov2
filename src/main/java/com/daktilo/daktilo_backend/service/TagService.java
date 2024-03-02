@@ -30,12 +30,4 @@ public class TagService {
 
         return tagRepository.save(tag);
     }
-
-
-    /*public void batchSaveTags(Set<Tag> tags, UUID articleId){
-        if(articleId != null){
-            tags.stream().map(tag->tag::set)
-        }
-    }*/
-
 }

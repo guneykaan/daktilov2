@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.ZoneId;
@@ -38,7 +39,12 @@ public class DTOMapper {
     }
 
     public Category convertToCategoryEntity(UUID id,CategoryDTO categoryDTO){
-        Category category = categoryRepository.findById(id).orElse(new Category());
+        Category category;
+        if(id!=null) {
+            category = categoryRepository.findById(id).orElse(new Category());
+        }else{
+            category = categoryRepository.findByCategoryName(categoryDTO.getCategoryName()).orElse(new Category());
+        }
 
         category.setCategoryName(categoryDTO.getCategoryName());
         category.setCategoryDesc(categoryDTO.getCategoryDesc());
@@ -80,16 +86,15 @@ public class DTOMapper {
     }
 
     public Tag convertToTagEntity(TagDTO tagDTO){
-        Tag tag = tagRepository.findByTagName(tagDTO.getTagName()).orElse(null);
+        Tag tag = tagRepository.findByTagName(tagDTO.getTagName()).orElse(new Tag());
+        tag.setTagName(tagDTO.getTagName());
 
-        if(tag==null){
-            tag = new Tag();
-            tag.setTagName(tagDTO.getTagName());
-        }
+        if(tagDTO.getArticleId()!=null){
+            Article newArticle = articleRepository.findById(tagDTO.getArticleId()).orElse(null);
 
-        Article newArticle = articleRepository.findById(tagDTO.getArticleId()).orElse(null);
-        if(newArticle!=null){
-            tag.getArticles().add(newArticle);
+            if(newArticle!=null){
+                tag.getArticles().add(newArticle);
+            }
         }
 
         return tag;

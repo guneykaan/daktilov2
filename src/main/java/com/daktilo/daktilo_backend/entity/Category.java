@@ -23,9 +23,9 @@ public class Category {
     @Column(name="category_desc")
     private String categoryDesc;
 
-    @JsonIgnore
     @ManyToMany(mappedBy="categories", fetch=FetchType.LAZY)
     @BatchSize(size=250)
+    @JsonIgnore
     private Set<Article> articles;
 
     public Category(){
