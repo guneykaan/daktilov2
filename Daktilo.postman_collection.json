@@ -1,0 +1,1389 @@
+{
+	"info": {
+		"_postman_id": "6308ce0a-8f0c-458a-b9ac-15036034ee23",
+		"name": "Daktilo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32761579"
+	},
+	"item": [
+		{
+			"name": "Category-Controller",
+			"item": [
+				{
+					"name": "/category/v2/edit/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"fbbb5e44-c808-4c90-8303-7210257ab15e\",\n  \"categoryName\": \"putDeneme2\",\n  \"categoryDesc\": \"putDeneme2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/category/v2/edit/fbbb5e44-c808-4c90-8303-7210257ab15e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"v2",
+								"edit",
+								"fbbb5e44-c808-4c90-8303-7210257ab15e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/category/v2/add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categoryName\": \"TeknolojiDeneme22\",\n  \"categoryDesc\": \"TeknolojiDeneme22\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/category/v2/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"v2",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/category",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/category/v1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/category/{name}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/category/v1/TeknolojiDeneme2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"v1",
+								"TeknolojiDeneme2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/category/v2/delete/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/category/v2/delete/b691c383-b67f-4ebf-b132-3f5cad0d6d01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"category",
+								"v2",
+								"delete",
+								"b691c383-b67f-4ebf-b132-3f5cad0d6d01"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Author-Controller",
+			"item": [
+				{
+					"name": "/author/v2/{id}/deactivate/true",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/author/v2/550e8400-e29b-41d4-a716-446655440000/deactivate/true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"author",
+								"v2",
+								"550e8400-e29b-41d4-a716-446655440000",
+								"deactivate",
+								"true"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/author/v2/edit/{id}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"password\": \"string\",\n  \"username\": \"string\",\n  \"email\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"dateJoined\": 0,\n  \"role\": \"string\",\n  \"enabled\": true,\n  \"accountNonLocked\": true,\n  \"accountNonExpired\": true,\n  \"credentialsNonExpired\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/author/v2/edit/550e8400-e29b-41d4-a716-446655440000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"author",
+								"v2",
+								"edit",
+								"550e8400-e29b-41d4-a716-446655440000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/author",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/author/v1?page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"author",
+								"v1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/author/{id}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/author/v1/e93377fa-018e-49c1-a4d7-8006f1d8371a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"author",
+								"v1",
+								"e93377fa-018e-49c1-a4d7-8006f1d8371a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/author/{id}/articles",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/author/v1/e93377fa-018e-49c1-a4d7-8006f1d8371a/articles?page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"author",
+								"v1",
+								"e93377fa-018e-49c1-a4d7-8006f1d8371a",
+								"articles"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/author/v2/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/author/v2/e93377fa-018e-49c1-a4d7-8006f1d8371a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"author",
+								"v2",
+								"e93377fa-018e-49c1-a4d7-8006f1d8371a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Article-Controller",
+			"item": [
+				{
+					"name": "/article/v2/edit/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categories\": [\n    {\n      \"id\": \"7370f0c2-1c61-41c5-8ded-b8f62782a5dc\",\n        \"categoryName\": \"TeknolojiDeneme2\",\n        \"categoryDesc\": \"TeknolojiDeneme2\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"tagName\": \"Finans\"\n    }\n  ],\n  \"authorId\": \"e93377fa-018e-49c1-a4d7-8006f1d8371a\",\n  \"datePosted\": \"2024-02-29T08:37:29.878Z\",\n  \"articleTitle\": \"string\",\n  \"articleContent\": \"string\",\n  \"commentStatus\": true,\n  \"active\": true,\n  \"inSlider\": true,\n  \"pictureUrl\": \"string\",\n  \"videoUrl\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/article/v2/edit/04b4944b-cb5e-468c-923b-715a588c10ce",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v2",
+								"edit",
+								"04b4944b-cb5e-468c-923b-715a588c10ce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/v2/activate/{id}/{activeStatus}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/article/v2/activate/97aa0f24-1f3c-4b0b-81af-a4c863253926/true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v2",
+								"activate",
+								"97aa0f24-1f3c-4b0b-81af-a4c863253926",
+								"true"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/v2/add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"categories\": [\n    {\n      \"categoryName\": \"TeknolojiDeneme2\",\n      \"categoryDesc\": \"TeknolojiDeneme2\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"tagName\": \"Finans\"\n    }\n  ],\n  \"authorId\": \"e93377fa-018e-49c1-a4d7-8006f1d8371a\",\n  \"datePosted\": \"2024-02-28T21:36:23.447Z\",\n  \"articleTitle\": \"Deneme3\",\n  \"articleContent\": \"Deneme3\",\n  \"commentStatus\": true,\n  \"active\": true,\n  \"inSlider\": true,\n  \"pictureUrl\": \"image1\",\n  \"videoUrl\": \"video1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/article/v2/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v2",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/article/v1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/slider",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/article/v1/slider?page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v1",
+								"slider"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/article/v1/search?keyword=Teknoloji",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v1",
+								"search"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "Teknoloji"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/searchByTags",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/article/v1/searchByTags?tags=Finans&page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v1",
+								"searchByTags"
+							],
+							"query": [
+								{
+									"key": "tags",
+									"value": "Finans"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/read/{id}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/article/v1/read/b0236af0-0b3b-458d-97bd-6f2cd4a128dc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v1",
+								"read",
+								"b0236af0-0b3b-458d-97bd-6f2cd4a128dc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/v2/edit/{id}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/author/v1/e93377fa-018e-49c1-a4d7-8006f1d8371a/articles?page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"author",
+								"v1",
+								"e93377fa-018e-49c1-a4d7-8006f1d8371a",
+								"articles"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/popular",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/article/v1/popular?page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v1",
+								"popular"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/category/{category}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/article/v1/category/TeknolojiDeneme2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v1",
+								"category",
+								"TeknolojiDeneme2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/article/{id}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/article/v1/article/6dd429a0-be4b-4a3d-86f9-c3235f8cfb7e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v1",
+								"article",
+								"6dd429a0-be4b-4a3d-86f9-c3235f8cfb7e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/article/v2/delete/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/article/v2/delete/6dd429a0-be4b-4a3d-86f9-c3235f8cfb7e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"article",
+								"v2",
+								"delete",
+								"6dd429a0-be4b-4a3d-86f9-c3235f8cfb7e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Advertisement-Controller",
+			"item": [
+				{
+					"name": "/advertisement/edit/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"header\": \"string\",\n  \"adUrl\": \"string\",\n  \"photoUrl\": \"string\",\n  \"place\": \"string\",\n  \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/advertisement/edit/4ac78da2-bf33-4706-99da-6387e71b582d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"advertisement",
+								"edit",
+								"4ac78da2-bf33-4706-99da-6387e71b582d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/advertisement/add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"header\": \"Deneme4\",\n  \"adUrl\": \"Denem4\",\n  \"photoUrl\": \"Deneme4\",\n  \"place\": \"Deneme4\",\n  \"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/advertisement/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"advertisement",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/advertisement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/advertisement?page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"advertisement"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/advertisement/{status}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/advertisement/status?status=true&page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"advertisement",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "true"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/advertisement/{location}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/advertisement?location=Deneme3&page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"advertisement"
+							],
+							"query": [
+								{
+									"key": "location",
+									"value": "Deneme3"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/advertisement/delete/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/advertisement/delete/4ac78da2-bf33-4706-99da-6387e71b582d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"advertisement",
+								"delete",
+								"4ac78da2-bf33-4706-99da-6387e71b582d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin-Controller",
+			"item": [
+				{
+					"name": "/admin/edit/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"password\": \"string\",\n  \"username\": \"string\",\n  \"email\": \"string\",\n  \"phoneNumber\": \"string\",\n  \"dateJoined\": 0,\n  \"role\": \"string\",\n  \"enabled\": true,\n  \"accountNonLocked\": true,\n  \"accountNonExpired\": true,\n  \"credentialsNonExpired\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/admin/edit/550e8400-e29b-41d4-a716-446655440000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"edit",
+								"550e8400-e29b-41d4-a716-446655440000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/admin/delete/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/delete/550e8400-e29b-41d4-a716-446655440000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"delete",
+								"550e8400-e29b-41d4-a716-446655440000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag-Controller",
+			"item": [
+				{
+					"name": "/tag/v2/add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tagName\": \"MagazinDeneme4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tag/v2/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tag",
+								"v2",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tag",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tag/v1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tag",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/v2/delete/{tag}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tag/v2/delete?tag=MagazinDeneme2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tag",
+								"v2",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "tag",
+									"value": "MagazinDeneme2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User-Controller",
+			"item": [
+				{
+					"name": "/user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user?page=0&size=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/{username}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/deneme",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"deneme"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/550e8400-e29b-41d4-a716-446655440000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"550e8400-e29b-41d4-a716-446655440000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AuthController",
+			"item": [
+				{
+					"name": "signIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\":\"omer12\",\n    \"lastName\":\"manisalıgil12\",\n    \"password\":\"password1\",\n    \"username\":\"omer1manisaligil12\",\n    \"email\":\"omer12@gmail.com\",\n    \"phoneNumber\":\"121232131223133\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/signIn",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"signIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"demo1\",\n    \"email\":\"demo@demo.com\",\n    \"password\":\"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AdminController",
+			"item": [
+				{
+					"name": "give rights to user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vMSIsImlhdCI6MTcwOTMzMDAwOSwiZXhwIjoxNzA5NDE2NDA5fQ.pT9-q_Cv7KyIKPiDoeo7q7tHXULvK93i8uhgzPOBgWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\":\"ADMIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/admin/update/8c7a965b-40b9-48a6-9e38-30637b0c085b/user-role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"update",
+								"8c7a965b-40b9-48a6-9e38-30637b0c085b",
+								"user-role"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
