@@ -15,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -40,10 +42,10 @@ public class AuthorController {
             @RequestParam(name="size", defaultValue="3") int size){
         try {
             Pageable pageRequest = PageRequest.of(page, size);
-            Page<User> authors = userRepository.findAllByRole(pageRequest, Role.AUTHOR.toString());
-
-            if (authors!=null && !authors.isEmpty()){
-                return ResponseEntity.ok(authors);
+            Page<User> authors = userRepository.findAllByRole(pageRequest, Role.AUTHOR);
+            List<UserDTO> authorDto = authors.stream().map(dtoMapper::convertToUserDTO).toList();
+            if (authorDto!=null && !authorDto.isEmpty()){
+                return ResponseEntity.ok(authorDto);
             }else{
                 return ResponseEntity.badRequest().body("Yazar bulunamadı");
             }
@@ -61,7 +63,7 @@ public class AuthorController {
         try{
             User author = userRepository.findById(id).orElse(null);
             if(author!=null){
-                return ResponseEntity.ok(author);
+                return ResponseEntity.ok(dtoMapper.convertToUserDTO(author));
             }else{
                 return ResponseEntity.badRequest().body("Yazar bulunamadı.");
             }

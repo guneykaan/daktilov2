@@ -98,20 +98,21 @@ public class DTOMapper {
     public UserDTO convertToUserDTO(User user){
         UserDTO userDTO = new UserDTO();
 
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setUsername(userDTO.getUsername());
-        user.setEmail(user.getEmail());
-        user.setPhoneNumber(user.getPhoneNumber());
-        Long dateJoined = userDTO.getDateJoined();
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setPhoneNumber(user.getPhoneNumber());
+        Long dateJoined = user.getDateJoined();
         if(dateJoined == null){
             dateJoined = ZonedDateTime.now(ZoneId.of("Europe/Istanbul")).toInstant().toEpochMilli();
         }
-        user.setDateJoined(dateJoined);
-        user.setAccountNonExpired(userDTO.isAccountNonExpired());
-        user.setCredentialsNonExpired(userDTO.isCredentialsNonExpired());
-        user.setEnabled(userDTO.isEnabled());
-        user.setAccountNonLocked(userDTO.isAccountNonLocked());
+        userDTO.setDateJoined(dateJoined);
+        userDTO.setAccountNonExpired(user.isAccountNonExpired());
+        userDTO.setCredentialsNonExpired(user.isCredentialsNonExpired());
+        userDTO.setEnabled(user.isEnabled());
+        userDTO.setAccountNonLocked(user.isAccountNonLocked());
+        userDTO.setRole(user.getRole().name());
         return userDTO;
     }
 

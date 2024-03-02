@@ -1,5 +1,6 @@
 package com.daktilo.daktilo_backend.repository;
 
+import com.daktilo.daktilo_backend.constants.Role;
 import com.daktilo.daktilo_backend.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +21,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     public Optional<User> findByUsername(String username);
 
-    public Page<User> findAllByRole(Pageable pageRequest, String role);
+    public Page<User> findAllByRole(Pageable pageRequest, Role role);
 
     @Query("""
             SELECT u FROM User u
