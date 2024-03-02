@@ -54,10 +54,15 @@ public class TagController {
         }
     }
 
-    @DeleteMapping("/v2/delete/{tag}")
-    public ResponseEntity deleteTag(@PathVariable(name="tag") Tag tag){
+    @DeleteMapping("/v2/delete{tag}")
+    public ResponseEntity deleteTag(@RequestParam(name="tag") String tag){
         try{
-            tagRepository.delete(tag);
+            Tag tagToDelete = tagRepository.findByTagName(tag).orElse(null);
+            if(tagToDelete!=null){
+                tagRepository.delete(tagToDelete);
+            }else{
+                return ResponseEntity.badRequest().body("Silmek istediğiniz tag bulunamadı.");
+            }
             return ResponseEntity.ok().body("Silme işlemi başarılı");
         }catch(PersistenceException p){
             p.printStackTrace();

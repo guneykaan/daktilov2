@@ -44,12 +44,12 @@ public class AdvertisementController {
         }
     }
 
-    @GetMapping("/{status}")
+    @GetMapping("/status")
     @Transactional
     public ResponseEntity getAllByStatus(
             @RequestParam(name="page", defaultValue="0") int page,
             @RequestParam(name="size", defaultValue="3") int size,
-            @PathVariable(name="status") boolean status
+            @RequestParam(name="status", defaultValue = "true") boolean status
     ){
         try{
             Pageable pageRequest = PageRequest.of(page,size);
@@ -69,12 +69,12 @@ public class AdvertisementController {
         }
     }
 
-    @GetMapping("/{location}")
+    @GetMapping("/place")
     @Transactional
     public ResponseEntity getAllByLocation(
             @RequestParam(name="page", defaultValue="0") int page,
             @RequestParam(name="size", defaultValue="3") int size,
-            @PathVariable(name="location") String location
+            @RequestParam(name="location") String location
     ){
         try{
             Pageable pageRequest = PageRequest.of(page,size);
@@ -94,7 +94,7 @@ public class AdvertisementController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping("/v2/add")
     @Transactional
     public ResponseEntity addAdvertisement(@RequestBody Advertisement advertisement){
         try {
@@ -110,7 +110,7 @@ public class AdvertisementController {
         }
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/v2/edit/{id}")
     @Transactional
     public ResponseEntity editAdvertisement(@RequestBody Advertisement advertisement,
                                             @PathVariable("id") UUID id){
@@ -130,7 +130,7 @@ public class AdvertisementController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/v2/delete/{id}")
     @Transactional
     public ResponseEntity deleteAdvertisement(@PathVariable(name="id") UUID id){
         try {

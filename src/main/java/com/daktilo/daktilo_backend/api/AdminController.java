@@ -28,21 +28,6 @@ public class AdminController {
 
     private List<Role> roles = List.of(Role.ADMIN,Role.AUTHOR,Role.READER);
 
-    @PostMapping("/add/user")
-    @Transactional
-    public ResponseEntity addUser(@RequestBody UserDTO userDTO){
-        try{
-            User user = userService.addUser(userDTO);
-            return ResponseEntity.ok(user);
-        }catch(PersistenceException p){
-            p.printStackTrace();
-            return ResponseEntity.badRequest().body("Kullanıcı eklerken bir hata oluştu");
-        }catch(Exception e){
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("Kullanıcı eklerken beklenmedik bir hata oluştu.");
-        }
-    }
-
     @PutMapping(path="/edit/{id}")
     public ResponseEntity updateUser(@PathVariable("id") UUID id, @RequestBody UserDTO userDTO){
         try{

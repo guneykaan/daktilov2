@@ -145,7 +145,7 @@ public class AuthorController {
     public ResponseEntity removeAuthor(@PathVariable(name="id") UUID id){
         try {
             User author = userRepository.findById(id).orElse(null);
-
+            System.out.println("asdadsdsasdadsadsaas    DSADSasfsfSdf "+id);
             if (author != null) {
                 userRepository.deleteById(id);
                 return ResponseEntity.ok().body("Silme işlemi başarılı");
