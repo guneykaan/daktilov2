@@ -32,7 +32,7 @@ public class ArticleController {
     @Autowired
     EntityManager entityManager;
 
-    @GetMapping
+    @GetMapping("/v1")
     @Transactional
     public ResponseEntity getAllOrderedByDate(
             @RequestParam(name="page", defaultValue="0") int page,
@@ -57,7 +57,7 @@ public class ArticleController {
     }
 
     //gündem ayrı bir category olduğu için burası kullanılır ve tarihe göre sıralar
-    @GetMapping("/category/{category}")
+    @GetMapping("/v1/category/{category}")
     @Transactional
     public ResponseEntity findByCategory(
             @PathVariable("category") String category,
@@ -83,7 +83,7 @@ public class ArticleController {
     }
 
     //todo timestamp-date'e aralığına göre ver
-    @GetMapping("/popular")
+    @GetMapping("/v1/popular")
     @Transactional
     public ResponseEntity getAllOrderedByPopular(
             @PathVariable(value="from",required = false) Timestamp from,
@@ -111,7 +111,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping("/slider")
+    @GetMapping("/v1/slider")
     @Transactional
     public ResponseEntity getArticlesInSlider(
             @PathVariable(value = "category", required = false) String categoryName,
@@ -143,7 +143,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping("/searchByTags")
+    @GetMapping("/v1/searchByTags")
     @Transactional
     public ResponseEntity findByTag(
             @RequestParam(name="tags") List<String> tags,
@@ -167,7 +167,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping("/read/{id}")
+    @GetMapping("/v1/read/{id}")
     @Transactional
     public ResponseEntity readArticle(@PathVariable("id") UUID id){
         try{
@@ -190,7 +190,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping("/search")
+    @GetMapping("/v1/search")
     @Transactional
     public ResponseEntity searchArticles(@RequestParam("keyword") String keyword){
         try{
@@ -211,7 +211,7 @@ public class ArticleController {
         }
     }
 
-    @GetMapping("/article/{id}")
+    @GetMapping("/v1/article/{id}")
     @Transactional
     public Article findById(@PathVariable("id") UUID id){
         return articleRepository.findById(id).orElse(null);
