@@ -80,8 +80,6 @@ public class AdminController {
     public ResponseEntity updateUserRole(@PathVariable("userId") UUID id, @RequestBody RoleRequest role){
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-            roles.forEach(System.out::println);
-            System.out.println(role.getRole());
             Role newUserRole = roles.stream().filter(
                     r -> r.toString().equals(role.getRole())
             ).findFirst().orElse(null);

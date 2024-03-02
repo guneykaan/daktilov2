@@ -3,6 +3,7 @@ package com.daktilo.daktilo_backend.api;
 import com.daktilo.daktilo_backend.constants.Role;
 import com.daktilo.daktilo_backend.entity.Article;
 import com.daktilo.daktilo_backend.entity.User;
+import com.daktilo.daktilo_backend.payload.DTOMapper;
 import com.daktilo.daktilo_backend.payload.request.UserDTO;
 import com.daktilo.daktilo_backend.repository.ArticleRepository;
 import com.daktilo.daktilo_backend.repository.UserRepository;
@@ -29,6 +30,9 @@ public class AuthorController {
 
     @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    DTOMapper dtoMapper;
 
     @GetMapping("/v1")
     public ResponseEntity getAll(
@@ -103,7 +107,9 @@ public class AuthorController {
             if(author!=null){
                 author.setAccountNonLocked(status);
                 User saved = userRepository.save(author);
-                return ResponseEntity.ok(saved);
+
+                UserDTO authorDTO = dtoMapper.convertToUserDTO(saved);
+                return ResponseEntity.ok(authorDTO);
             }else{
                 return ResponseEntity.badRequest().body("Yazar bulunamadı.");
             }
@@ -122,7 +128,8 @@ public class AuthorController {
             @RequestBody UserDTO userDTO){
         try{
             User author = userService.update(id,userDTO);
-            return ResponseEntity.ok(author);
+            UserDTO authorDTO = dtoMapper.convertToUserDTO(author);
+            return ResponseEntity.ok(authorDTO);
         }catch(PersistenceException p){
             p.printStackTrace();
             return ResponseEntity.badRequest().body("Yazarı güncellemeye çalışırken bir hata oluştu");

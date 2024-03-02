@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -78,13 +79,14 @@ public class AuthController {
     @PostMapping("/login")
     @Transactional
     public ResponseEntity login(@RequestBody LoginRequest loginRequest){
-        authenticationManager.authenticate(
+        try{
+            authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
                         loginRequest.getPassword()
                 )
-        );
-        try{
+            );
+
             User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(ResourceNotFoundException::new);
 
             Token existingUserToken = user.getTokens().stream().filter(
@@ -129,6 +131,9 @@ public class AuthController {
         }catch(ResourceNotFoundException rnfe){
             rnfe.printStackTrace();
             return ResponseEntity.badRequest().body("Giriş yapmaya çalıştığınız email ile kayıtlı bir kullanıcı bulunamadı");
+        }catch(BadCredentialsException bce){
+            bce.printStackTrace();
+            return ResponseEntity.badRequest().body("Girdiğiniz kullanıcı ismiyle uyuşan bir kullanıcı bulunamadı.");
         }
     }
 

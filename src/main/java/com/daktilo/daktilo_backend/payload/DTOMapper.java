@@ -95,6 +95,26 @@ public class DTOMapper {
         return tag;
     }
 
+    public UserDTO convertToUserDTO(User user){
+        UserDTO userDTO = new UserDTO();
+
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(user.getEmail());
+        user.setPhoneNumber(user.getPhoneNumber());
+        Long dateJoined = userDTO.getDateJoined();
+        if(dateJoined == null){
+            dateJoined = ZonedDateTime.now(ZoneId.of("Europe/Istanbul")).toInstant().toEpochMilli();
+        }
+        user.setDateJoined(dateJoined);
+        user.setAccountNonExpired(userDTO.isAccountNonExpired());
+        user.setCredentialsNonExpired(userDTO.isCredentialsNonExpired());
+        user.setEnabled(userDTO.isEnabled());
+        user.setAccountNonLocked(userDTO.isAccountNonLocked());
+        return userDTO;
+    }
+
     public User convertToUserEntity(UserDTO userDTO, UUID id){
         User user;
         if(id!=null)
