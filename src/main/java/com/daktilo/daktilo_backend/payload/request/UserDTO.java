@@ -1,5 +1,7 @@
 package com.daktilo.daktilo_backend.payload.request;
 
+import java.util.UUID;
+
 public class UserDTO {
 
     private String firstName;
@@ -9,6 +11,16 @@ public class UserDTO {
     private String email;
     private String phoneNumber;
     private Long dateJoined;
+
+    private UUID id;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     private boolean isAccountNonExpired;
 

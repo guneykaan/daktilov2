@@ -103,6 +103,7 @@ public class DTOMapper {
     public UserDTO convertToUserDTO(User user){
         UserDTO userDTO = new UserDTO();
 
+        userDTO.setId(user.getId());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setUsername(user.getUsername());
